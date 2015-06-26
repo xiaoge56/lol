@@ -14,7 +14,7 @@ def compute_undirect_graph(graph,user,neighbours):
     if user not in graph.keys():
         if len(neighbours)!=0:
             for neighbour in neighbours:
-                graph[user].add(neighbour)
+                graph[user].add()
     else:
         for neighbour in neighbours:
                 graph[user].add(neighbour)
