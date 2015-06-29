@@ -55,6 +55,7 @@ def deal_with_bs_data(player_data):
     l=temp.split('|')
     data.extend(l[1::2])
     div_layer('p').get_text()
+     
     
     for m in data:
         print m
