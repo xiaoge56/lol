@@ -12,12 +12,22 @@ def http_header():
                   'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36', 
                   'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', \
                   'Connection':'keep-alive'} 
-    req = urllib2.Request(url0,headers=send_headers)   
+    req = urllib2.Request(url2,headers=send_headers)   
     return req
 
 def battle_detail_parse(html):
+    
     soup = BeautifulSoup(html)
-    print soup.prettify()
+    div_layer=soup('div','layer')
+    
+    if len(div_layer)>0:
+        
+        for every_player in div_layer:
+            deal_with_bs_data(every_player)
+            break
+        
+    else:
+        print '详细战斗数据为空'
 
 def find_match_id(html):
     '返回战斗场次的id'
@@ -27,7 +37,28 @@ def find_match_id(html):
     for id in li:
         match_id_list.append(id['id'][3:])
     return match_id_list
+def deal_with_bs_data(player_data):
+    '从bs格式数据中取回需要的数据以及格式'
 
+    data=[]
+    div_layer = player_data
+
+    username = div_layer(r'p','tip-user-name')[0].get_text(strip=True)
+    pick_hero = div_layer('span','tip-tip-user-name2')[0].get_text(strip=True)
+    
+    more_detail = div_layer(r'table','mod-tips-data')
+
+    data.append(username)
+    data.append(pick_hero)
+    for table in more_detail:
+        temp=table.get_text(strip=True,separator=u'|')
+    l=temp.split('|')
+    data.extend(l[1::2])
+    div_layer('p').get_text()
+    
+    for m in data:
+        print m
+    return m
 re=http_header()
 html=urllib2.urlopen(re).read()
 battle_detail_parse(html)
