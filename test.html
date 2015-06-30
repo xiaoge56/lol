@@ -1,0 +1,480 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>战斗日志</title>
+    <script type="text/javascript" src="http://assets.dwstatic.com/common/js/jquery.js"></script>
+    <link rel="stylesheet" href="http://assets.dwstatic.com/project/lolbox/2.13.0/css/zj.css"/>
+
+    <!-- 分享按钮图片 和 boxTitle 分享 依赖此样式 -->
+<!--    <link rel="stylesheet" href="http://img.lolbox.duowan.com/global.css"/>-->
+
+    <script type="text/javascript" src="http://www.duowan.com/public/assets/sys/js/dww3.min.js"></script>
+    <script type="text/javascript" src="http://assets.dwstatic.com/project/lolbox/2.10.0/js/battle.js"></script>
+    <script type="text/javascript" src="js/matchList.js"></script>
+    <script>
+var js$yyuid = "";
+function loadSubscription(div)  {
+	if (div.find('.rss-count').html() == "") {
+		div.find('.rss-count').html('0');
+		var aid = div.attr('yyaid');
+		$.get("http://lolbox.duowan.com/yyLiveCertifiedAnchorSubscribe.php?stamp=" + (new Date()).getTime() +  "&aid=" + aid + "&uid=" + js$yyuid, function(data) {
+			if (data) {
+				var result = eval('('+ data + ')');
+				if (result['subscribed']) {
+					div.addClass('brocast-rssed');
+				}
+				else {
+					div.removeClass('brocast-rssed');
+				}
+				div.find('.rss-count').html(result['count']);
+			}
+		});
+	}
+}
+function doSubscription(div) {
+	if (js$yyuid == "") {
+		location.href = "lolbox://LoginYY";
+	}
+	else {
+		var aid = div.attr('yyaid');
+		if (!div.hasClass('.brocast-rssed')) {
+			$.get("http://lolbox.duowan.com/yyLiveCertifiedAnchorSubscribe.php?stamp=" + (new Date()).getTime() +  "&op=subscribe&aid=" + aid + "&uid=" + js$yyuid, function(data) {
+				if (data) {
+					var result = eval('('+ data + ')');
+					if (result['subscribed']) {
+						div.addClass('brocast-rssed');
+					}
+					else {
+						div.removeClass('brocast-rssed');
+					}
+					div.find('.rss-count').html(result['count']);
+				}
+			});
+		}
+		else {
+			$.get("http://lolbox.duowan.com/yyLiveCertifiedAnchorSubscribe.php?stamp=" + (new Date()).getTime() +  "&op=unsubscribe&aid=" + aid + "&uid=" + js$yyuid, function(data) {
+				if (data) {
+					var result = eval('('+ data + ')');
+					if (result['subscribed']) {
+						div.addClass('brocast-rssed');
+					}
+					else {
+						div.removeClass('brocast-rssed');
+					}
+					div.find('.rss-count').html(result['count']);
+				}
+			});
+		}
+	}
+}
+function prepareCertifiedLiveAnchorHover() {
+  $("body").delegate('.brocast-vip','mouseenter', function(event) {
+	var menu = $(this).find(".mod-tips-s3");
+	$(this).css('z-index', 101).find('.mod-tips-s3').show();
+	/* Act on the event */
+	loadSubscription($(this).find('.brocast-rss'));
+  });
+  $("body").delegate('.brocast-vip','mouseleave', function(event) {
+	  // console.log( event );
+	  var _this = $(this);
+	  window.brocastSign = setTimeout(function(){
+		_this.css('z-index', 100).find('.mod-tips-s3').hide();
+	  },200)
+	/* Act on the event */
+  });
+  $("body").delegate('.mod-tips-s3','mouseenter', function(event) {
+	//alert(window.brocastSign);
+	clearTimeout(window.brocastSign);
+	/* Act on the event */
+  });
+}
+$(function() {
+	prepareCertifiedLiveAnchorHover();
+});
+
+var js$certifiedLiveAnchors = null;
+function loadCertifiedLiveAnchors() {
+	$.get("http://lolbox.duowan.com/yyLiveCertifiedAnchorMapData.php?data-request=json", function(data) {
+		if (data) {
+			js$certifiedLiveAnchors = eval('('+ data + ')');
+		}
+	});
+}
+
+function getPlayerNames() {
+    return $('img[data-playername]').map(function() {
+        return $(this).attr('data-playername');
+    }).get();
+}
+
+function getRowIndexByPlayerName(playerName) {
+    var rowIdx = -1;
+    var playerNamesList = getPlayerNames();
+    if (playerNamesList) {
+        for (rowIdx = 0; rowIdx < playerNamesList.length; rowIdx++) {
+            if (playerNamesList[rowIdx] === playerName) {
+                return rowIdx;
+            }
+        }
+    }
+    return rowIdx;
+}
+
+function htmlCertifiedLiveAnchorIcon(nickname) {
+	if (js$certifiedLiveAnchors) {
+		var anchor = js$certifiedLiveAnchors[nickname];
+		if (anchor) {
+            var applyClassNames = [];
+            applyClassNames.push("brocast-vip");
+            applyClassNames.push('brocast-vip-type' + anchor['level']);
+
+            var idx = getRowIndexByPlayerName(nickname);
+            var playerNamesList = getPlayerNames();
+            if (playerNamesList && playerNamesList.length > 4 && idx > 5) {
+                applyClassNames.push('brocast-vip-top');
+            }
+
+			var html = 
+			'<span class="' + applyClassNames.join(' ') + '">' +
+				'<i></i>' +
+				'<div class="mod-tips-s3 hide">' +
+					'<div class="mod-tips-content">' +
+						'<p style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"><em>主播：</em>' + anchor['yynick'] + '</p>' +
+						'<p><em>频道：</em>' + anchor['channel'] + '</p>' +
+						'<p><em>认证：</em>' + anchor['tag'] + '</p>' +
+						'<div class="brocast-rss" yyaid="' + anchor['yyaid'] + '" onclick="doSubscription($(this))" style="cursor:pointer"><strong class="rss-count"></strong></div>' +
+					'</div>' +
+					'<i class="arrow t"></i>' +
+					'<span class="tag"></span>' +
+				'</div>' +
+			'</span>';
+			return html;
+		}
+	}
+	return '';
+}
+
+function addAnchorIconsToMatchList() {
+	for(var playerName in js$certifiedLiveAnchors) {
+		$('#matchDetail').find('.team-name').each(function() {
+            var playerNameGot = decodeURIComponent($(this).find('.avatar').attr('data-playerName'));
+			if ( playerNameGot == playerName) {
+				$(this).find('a').after( htmlCertifiedLiveAnchorIcon(playerName) );
+			}
+		});
+	}
+}
+</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            loadCertifiedLiveAnchors();
+        });
+    </script>
+
+    <!-- 大神陪玩相关 icon -->
+    <link rel="stylesheet" href="http://wan.duowan.com/static/css/god-icons.css"/>
+
+    <script type="text/javascript">var jiathis_config = { };</script>
+    <script type="text/javascript" src="js/sns_share.js?v=20121101" charset="utf-8"></script>
+</head>
+<body scroll='no' style="overflow:hidden">
+<div class="box">
+    <div class="box-hd">
+        <div class="fl crumbs">
+            <a href="/playerSearch.php">战绩查询</a><span>&gt;</span>
+            <a href="/playerDetail.php?serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94">三纷绣气                （弗雷尔卓德）</a>
+            <span>&gt;</span>战斗日志
+                    </div>
+        <span style="float:left"> <a style="margin-left:15px"
+                                     href="/favorateMatchList.php?serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94">TA的收藏</a> </span>
+
+        <div class="btns-fast">
+            <a title="返回" href="javascript:history.back();" onfocus="this.blur();" class="icons"><i></i></a>
+
+            <div class="share">
+                <a class="icons" href="#"><i></i></a>
+
+                <div class="links">
+                    <a class="button_tsina" href="#"><span>新浪微博</span></a>
+                    <a class="button_tqq" href="#"><span>腾讯微博</span></a>
+                    <a class="button_qzone" href="#"><span>QQ空间</span></a>
+                    <a class="screenshot" href="javascript:screenshot();"><span>本页截图</span></a>
+                    <a class="copy-link"
+                       href="javascript:window.clipboardData.setData('Text',window.location.href);alert('链接复制成功');"><span>复制链接</span></a>
+                </div>
+            </div>
+            <a title="刷新" href="javascript:location.reload();" onfocus="this.blur();" class="icons refresh"><i></i></a>
+        </div>
+
+    </div>
+    <div class="box-bd">
+        <div class="l-box"><ul>                    <li id="cli12950505541">
+                        <span class="avatar">
+                            
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/TwistedFate_40x40.jpg"
+                                alt="卡牌大师" title="卡牌大师"/>
+                        </span>
+
+                        <p><em class="green">胜利</em></p>
+
+                        <p class="info">
+                            <span class="game">匹配赛</span>&nbsp;05-17                        </p>
+                                            </li>
+
+                                    <li id="cli12839916280">
+                        <span class="avatar">
+                            
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/MonkeyKing_40x40.jpg"
+                                alt="齐天大圣" title="齐天大圣"/>
+                        </span>
+
+                        <p><em class="green">胜利</em></p>
+
+                        <p class="info">
+                            <span class="game">大乱斗</span>&nbsp;05-10                        </p>
+                                            </li>
+
+                                    <li id="cli12839322083">
+                        <span class="avatar">
+                            
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/Nidalee_40x40.jpg"
+                                alt="狂野女猎手" title="狂野女猎手"/>
+                        </span>
+
+                        <p><em class="red">失败</em></p>
+
+                        <p class="info">
+                            <span class="game">匹配赛</span>&nbsp;05-10                        </p>
+                                            </li>
+
+                                    <li id="cli12754395507">
+                        <span class="avatar">
+                            
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/Jayce_40x40.jpg"
+                                alt="未来守护者" title="未来守护者"/>
+                        </span>
+
+                        <p><em class="red">失败</em></p>
+
+                        <p class="info">
+                            <span class="game">匹配赛</span>&nbsp;05-04                        </p>
+                                            </li>
+
+                                    <li id="cli12680375834">
+                        <span class="avatar">
+                            
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/Kassadin_40x40.jpg"
+                                alt="虚空行者" title="虚空行者"/>
+                        </span>
+
+                        <p><em class="red">失败</em></p>
+
+                        <p class="info">
+                            <span class="game">匹配赛</span>&nbsp;04-30                        </p>
+                                            </li>
+
+                                    <li id="cli12579549979">
+                        <span class="avatar">
+                            
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/Malzahar_40x40.jpg"
+                                alt="虚空先知" title="虚空先知"/>
+                        </span>
+
+                        <p><em class="red">失败</em></p>
+
+                        <p class="info">
+                            <span class="game">排位赛</span>&nbsp;04-24                        </p>
+                                            </li>
+
+                                    <li id="cli12578738845">
+                        <span class="avatar">
+                            
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/Jayce_40x40.jpg"
+                                alt="未来守护者" title="未来守护者"/>
+                        </span>
+
+                        <p><em class="red">失败</em></p>
+
+                        <p class="info">
+                            <span class="game">排位赛</span>&nbsp;04-23                        </p>
+                                            </li>
+
+                                    <li id="cli12578166507">
+                        <span class="avatar">
+                            <i class='item--mvp'></i>
+                            <img
+                                src="http://img.lolbox.duowan.com/champions/Malzahar_40x40.jpg"
+                                alt="虚空先知" title="虚空先知"/>
+                        </span>
+
+                        <p><em class="green">胜利</em></p>
+
+                        <p class="info">
+                            <span class="game">排位赛</span>&nbsp;04-23                        </p>
+                                            </li>
+
+                </ul><div class="zj-page">
+    <a href="#" class="zj-prev zj-s disable" title="上一页"></a>
+    <input type="text" class="zj-cur" value="1">
+    <span class="page-num"> / 8</span>
+    <a href="#" class="go-page">GO</a>
+    <a href="/matchList.php?serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94&page=2" class="zj-next zj-s" title="下一页"></a>
+</div></div>
+
+        <div class="r-box">
+            <div id="matchDetail">
+                                <img src="images/loading.gif" width="400" height="400">
+                            </div>
+            <div id="a2Ad" class="mod-share" style="height:28px !important;line-height:28px !important;padding:1px 0px !important">
+            <!--<span class="comment"><a href="#">评论(3)</a></span></span>-->
+    <script src="http://market.duowan.com/duowan/227029454487.js"></script>
+    <script type="text/javascript" src="http://sz.duowan.com/s/ya/ya.1.3.1-min.js"></script>
+    <script>
+        //lolbox游戏广告统计，调用接口发送到海度
+        $(document).ready(function(){
+            $("#dw-counter").click(function(){
+                var href = $(this).attr('href');
+                var reg = new RegExp('^lolbox','gi');
+                if(reg.test(href)){
+                    var gReg = new RegExp("\/.*?([\?])",'i');
+                    var result = gReg.exec(href);
+                    if(result){
+                        var gameid = [];
+                        for(var i = result.index+1;i<href.length;i++){
+                            if(href[i] == '?'){
+                                break;
+                            }else{
+                                gameid.push(href[i]);
+                            }
+                        }
+                        var gameId = gameid.join('');
+                        gameId = gameId.split('/')[2];
+                    }else{
+                        var gameId = 'null';
+                    }
+                }else{
+                    var gameId = 'null';
+                }
+
+                var yySourceIndex = "A2";
+                var source = "A2广告位";
+                var serverId = "null";
+
+                var yyuid = "";
+                var username = "三纷绣气";
+
+                this.ya = new YA.report.YYAnalytics('boxgame', yyuid, '');//yyuid为空，则传空串 ''
+                var data = {
+                    pro :   "yygame_300",
+                    rso :   "FROM_LOLBOX",
+                    pas :   username, //// username为空，则传空串 ''
+                    rso_desc    :   "LOL盒子"
+                };
+
+                this.ya.reportProductStartUp(data,'');
+                var data = { eid : "click/lolbox/zjtab/" + yySourceIndex, eid_desc :"点击/LOL盒子/战绩tab/" + source, pro : "yygame_300", gam : gameId, gse : serverId};
+                this.ya.reportProductEvent(data, '');
+
+            });
+        });
+
+    </script>
+            </div>
+    </div>
+</div>
+
+<!-- 成就分享{ -->
+<div class="mod-tips-s3 ach-share hide">
+    <div class="mod-tips-content">
+        <div class="txt"><strong></strong></div>
+        <div id="ckepop" class="clearfix">
+            <span class="jiathis_txt">分享到：</span>
+            <a class="button_tsina">
+                <span class="hide">新浪微博</span>
+            </a>
+            <a class="button_tqq">
+                <span class="hide">腾讯微博</span>
+            </a>
+            <a class="button_qzone">
+                <span class="hide">QQ空间</span>
+            </a>
+        </div>
+    </div>
+    <i class="arrow t"></i>
+</div>
+<!-- }成就分享 -->
+ 
+<div id="__dvCompute" style="font-size:12px;position:absolute;visibility:hidden"></div>
+
+<div id="phone-user-pop">
+    <div class="phone-user-con">
+    </div>
+</div>
+
+<div class="hide">
+    <span id="serverName">网通三</span>
+    <span id="playerName">三纷绣气</span>
+    <span id="isInMyFavorite">0</span>
+</div>
+
+<script type="text/javascript" src="/js/heroesList.js?v=1"></script>
+<script type="text/javascript" src="/js/zbItems.js?v=1"></script>
+
+<!-- 大神陪玩认证 icon -->
+<script src="http://assets.dwstatic.com/wan/E7BD91E9809AE4B889.js?10" type="text/javascript"></script>
+
+<!-- 广告/游戏相关-->
+<script>
+    var stat_app_name = "boxgame_matchlist";
+    var stat_uid = getLOLBoxYYUID();
+    var stat_oper_default = false;
+</script>
+<script src="http://assets.dwstatic.com/f=amkit/entry.js"></script>
+
+<!-- 广告/海度统计相关-->
+<script type="text/javascript">
+    _hiido_no = 0;
+    _hiido_wid = ["lbox"];
+</script>
+<script src="http://www.duowan.com/duowan.js" type="text/javascript"></script>
+<script src="http://www.duowan.com/public/s/market_count.js" type="text/javascript"></script>
+
+
+<!-- 自定义统计 -->
+<script src="/js/counter.js" type="text/javascript"></script>
+<script src="/js/auto_incr.js" type="text/javascript"></script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function () {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1d726ad0f19324fd7ebc046dc6eef60d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script> 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-62964147-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
