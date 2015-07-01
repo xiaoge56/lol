@@ -23,21 +23,33 @@ def compute_undirect_graph(graph,user,neighbours):
 def breadth_frist_search(start_user_point):
     'search the graph starting by one node using BFS'
     visited=[]
-    visited.append(start_user_point)
-    sequence=deque()
-    sequence.append(start_user_point)
-    while len(sequence)!=0:
+    
+    user_sequence=deque() #init queue
+    matchIDs_sequence=deque()
+    user_sequence.append(start_user_point)
+    while len(user_sequence)!=0:
+        
         pre_deal_user=sequence.popletf()
+        visited.append(pre_deal_user)
 
-        neighbours=user_info_spider(pre_deal_user)
+        try:
+            matchIds=find_user_marchIDs(pre_deal_user)
+        except HTTPError, e:
+            print 'The server couldn\'t fulfill the request.'  
+            print 'Error code: ', e.code
+            
+        except URLError, e:  
+            print 'We failed to reach a server.'  
+            print 'Reason: ', e.reason
+        
+        for match in matchIDs_sequence:
+            find_users,detail_dat=find_mathID_detail(match)
+            save_detail_on_disk(detail_dat)
 
-        if len(neighbours)>0:
-            for neighbour in neighbours:
-                if neighbour not in visited:
-                    sequence.append(neighbour)
-        else:
-            'error,the return neighbour is None'
-            return False
+            for user in find_users:
+                if user not in visited:
+                    user_sequence.append(user)
+
     return True
     
 def main():

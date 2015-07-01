@@ -88,7 +88,9 @@ def deal_with_bs_data(player_data):
         data.append(x.split('|')[1])
     
     print data
- 
+def get_page_limit(html):
+    
+    return page_number
 matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气'
 page_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气&page=8'
 battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId=12290959436&serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94&favorate=0'
@@ -102,5 +104,6 @@ html=urllib2.urlopen(re).read()
 f=open('test','w')
 f.write(html)
 f.close()
+
 #print find_match_id(html)
 #battle_detail_parse(html)
