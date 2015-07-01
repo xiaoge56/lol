@@ -1,5 +1,6 @@
 #coding:utf-8
 from collections import deque
+import logging
 
 def init_choice():
     user_point="user id or user name"
@@ -27,6 +28,8 @@ def breadth_frist_search(start_user_point):
     user_sequence=deque() #init queue
     matchIDs_sequence=deque()
     user_sequence.append(start_user_point)
+
+    logging.info('Started')
     while len(user_sequence)!=0:
         
         pre_deal_user=sequence.popletf()
@@ -51,9 +54,18 @@ def breadth_frist_search(start_user_point):
                     user_sequence.append(user)
 
     return True
-    
+def init_queue():
+    logging.info('initing queue')
+    logging.info('the current lengh of user_sequence is '%s len(user_sequence))
+    logging.info('%s users have been done'% len(visited))
+    logging.info('the current lengh of user_sequence'% len(visited))
+    pass
 def main():
+    logging.basicConfig(filename='mylog.log', level=logging.INFO)
+    
     start_user_point=init_choice()
+
+    logging.info('choice a user in the queue ')
     if breadth_frist_search(start_user_point):
         print 'Done'
     else:
