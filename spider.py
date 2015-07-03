@@ -89,6 +89,10 @@ def deal_with_bs_data(player_data):
     
     print data
 def get_page_limit(html):
+    '''
+    对于每一个用户来说，这个函数应该只能被调用一次。返回用户战斗记录的页面长度
+    
+    '''
     
     return page_number
 matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气'
