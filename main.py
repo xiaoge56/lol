@@ -69,6 +69,7 @@ def breadth_frist_search(start_user_point):
     return True
 def init_read_file(path,result):
     'reading the last time record when continue to do work'
+
     
     name=path.split(r'/')[-1]
     
