@@ -6,12 +6,12 @@ import sys
 blink='\n'
 visited_MatchID=[]
 visited_user=[]
-deque_user=None
-deque_MatchID=None
+deque_user=deque()
+deque_MatchID=deque()
 
 def init_choice():
-
-    
+    global deque_user
+    user_point=deque_user.popleft()
     return user_point
 def usr_info_spider(user_point):
     '''
@@ -32,24 +32,24 @@ def compute_undirect_graph(graph,user,neighbours):
 def breadth_frist_search(start_user_point):
     'search the graph starting by one node using BFS'
     global visited_user
-    #visited=[]
+    global deque_MatchID
+    global visited_MatchID
+    global deque_user
     
-    user_sequence=deque() #init queue
-    matchIDs_sequence=deque()
-    user_sequence.append(start_user_point)
+    
+    deque_user.append(start_user_point)
 
-    logging.info('Started')
-    while len(user_sequence)!=0:
+    logging.info('Starting.....')
+    while len(deque_user)!=0:
         
-        pre_deal_user=sequence.popletf()
+        pre_deal_user=deque_user.popletf()
         visited_user.append(pre_deal_user)
 
         try:
-            matchIds=find_user_marchIDs(pre_deal_user)
+            deque_MatchID=find_user_marchIDs(pre_deal_user)
         except HTTPError, e:
-            with open('./dat/MatchID.dat','a') as f:
-                f.write(matchIds+blink)
-            #log
+            write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
+            logging.DEBUG('The server couldn\'t fulfill the request...deque_MatchID saved!')
             print 'The server couldn\'t fulfill the request.'  
             print 'Error code: ', e.code
             
@@ -58,22 +58,32 @@ def breadth_frist_search(start_user_point):
             print 'We failed to reach a server.'  
             print 'Reason: ', e.reason
         
-        for match in matchIDs_sequence:
+        for match in deque_MatchID:
             find_users,detail_dat=find_mathID_detail(match)
             save_detail_on_disk(detail_dat)
-
+            
             for user in find_users:
-                if user not in visited:
+                if user not in visited_user:
                     user_sequence.append(user)
-
+            
     return True
+def save_detail_on_disk(detail_dat):
+    global blink
+    try:
+        with open('./dat/user.dat','a') as f:
+            for line in detail_dat:
+                f.write(line+blink)
+    except IOError,msg:
+        print msg
+        logging.DEBUG('./dat/user.dat can not open!')
+        
 def init_read_file(path,result):
     'reading the last time record when continue to do work'
 
     
     name=path.split(r'/')[-1]
     
-    with open('./test.txt') as f:
+    with open(path) as f:
         for line in f:
             result.append(line.split()[0])
     if len(result)!=0:
@@ -81,7 +91,7 @@ def init_read_file(path,result):
     else:
         logging.info('%s is None!!'%name)
         
-def init_write_file(path,content_list):
+def write_next_init_file(path,content_list):
     'write next time init info '
     
     global blink
@@ -102,38 +112,34 @@ def init_dat():
     #with open('./dat/visited_user.dat','r') as f:
      #   for line
      #   visited_user=f.read()
+    logging.info('/*----begin to init data----*/')
+
     init_read_file('./dat/visited_user.dat',visited_user)
-    
-   # with open('./dat/MatchId.dat','r') as f:
-    #    visited_MatchID=f.read()
-    init_read_file('./dat/MatchId.dat',visited_MatchID)
-    
-    #with open('./dat/deque_user.dat','r') as f:
-     #   deque_user=f.read()
+    init_read_file('./dat/visited_MatchID.dat',visited_MatchID)
     init_read_file('./dat/deque_user.dat',deque_user)
-    
-    with open('./dat/deque_MatchID.dat','r') as f:
-        deque_MatchID=f.read()
     init_read_file('./dat/deque_MatchID.dat',deque_MatchID)
 
     logging.info('initing user queue..')
-    
-    logging.info('%d users have been done'% len(visited))
-    logging.info('the current lengh of user_sequence'% len(deque_user))
-    
-    logging.info ('%d matches have been record'% len(visited_MatchID))
-    logging.info('the current lengh of deque_MatchID is %d'% len(deque_MatchID))                                                        
+    logging.info('%d users have been done'% len(visited_user))
+    logging.info('the current lengh of user_sequence is %d'% len(deque_user))
+    logging.info ('%d matches have been recorded'% len(visited_MatchID))
+    logging.info('the current lengh of deque_MatchID is %d'% len(deque_MatchID))
+    logging.info('/*-----------------------------------*/')
 def main():
-    abc=[]
-    init_read_file('test.txt',abc)
-    '''
-    logging.basicConfig(filename='mylog.log', level=logging.INFO)
+
+    
+    logging.basicConfig(
+    filename='mylog.log',
+    level=logging.INFO,
+    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+    datefmt='%a, %d %b %Y %H:%M:%S'
+    )
     
     init_dat()
     logging.info('init_dat ok... ')
     
     start_user_point=init_choice()
-
+    
     logging.info('start_user_point get value:%s'%(start_user_point))
     logging.info('begin to crawl data ... ')
     
@@ -141,7 +147,7 @@ def main():
         logging.info('Done')
     else:
         logging.info("error!")
-    '''
-abc=[]
-logging.basicConfig(filename='mylog.log', level=logging.INFO)
-init_read_file('test.txt',abc)
+    
+
+if __name__=='__main__':
+    main()
