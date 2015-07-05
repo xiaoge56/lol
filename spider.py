@@ -36,10 +36,10 @@ def http_header(url):
     req = urllib2.Request(url,headers=send_headers)   
     return req
 
-def battle_detail_parse(html):
+def battle_detail_parse(soup_html):
     '返回一个列表，包含每场战斗中玩家的详细数据'
-    soup = BeautifulSoup(html)
-    div_layer=soup('div','layer')
+    
+    div_layer=soup_html('div','layer')
     retDataList=[]
     if len(div_layer)>0:
         
@@ -50,13 +50,13 @@ def battle_detail_parse(html):
     else:
         print '详细战斗数据为空'
 
-def find_match_id(html):
+def find_match_id(soup_html):
     '''返回战斗场次的id
     返回一个字典，key是matchId，value是这次Id的模式，比如匹配赛|大乱斗|排位赛
     '''
     match_id_set={}
-    soup = BeautifulSoup(html)
-    li=soup.find_all(r'li')
+    #soup = BeautifulSoup(html)
+    li=soup_html.find_all(r'li')
     match_id_list=[]
     for id in li:
         match_id_list.append(id['id'][3:])
@@ -88,13 +88,13 @@ def deal_with_bs_data(player_data):
         data.append(x.split('|')[1])
     
     print data
-def get_page_limit(html):
+def get_page_limit(soup_html):
     '''
     对于每一个用户来说，这个函数应该只能被调用一次。返回用户战斗记录的页面长度
     
     '''
-    
-    return page_number
+    page_num=soup_html('span','page-num')
+    return page_num[0].get_text(strip=True,separator=u'|')[-1]
 matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气'
 page_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气&page=8'
 battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId=12290959436&serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94&favorate=0'
@@ -105,9 +105,9 @@ visited_deque=deque()
 url=matchId_by_name_url
 re=http_header(url)
 html=urllib2.urlopen(re).read()
-f=open('test','w')
-f.write(html)
-f.close()
+soup_html=BeautifulSoup(html,"html.parser")
+page=get_page_limit(soup_html)
+
 
 #print find_match_id(html)
 #battle_detail_parse(html)
