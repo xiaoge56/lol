@@ -54,7 +54,11 @@ def find_match_id(soup_html):
     '''返回战斗场次的id
     返回一个字典，key是matchId，value是这次Id的模式，比如匹配赛|大乱斗|排位赛
     '''
+
+
+    keyword=[u'匹配赛',u'排位赛']
     match_id_set={}
+    another_set={}
     #soup = BeautifulSoup(html)
     li=soup_html.find_all(r'li')
     typegame=soup_html.find_all(r'span','game')
@@ -67,7 +71,11 @@ def find_match_id(soup_html):
         match_id_list.append(ids['id'][3:])
     for x,y in zip(match_id_list,typelist):
         match_id_set[x]=y
-    print match_id_set
+    for key in match_id_set:
+        if match_id_set[key] in keyword:
+            another_set[key]=match_id_set[key]
+    for x in another_set:
+        print x,another_set[x]
     return match_id_list
 def deal_with_bs_data(player_data):
     '''从bs格式数据中取回需要的数据以及格式

@@ -52,8 +52,8 @@ def find_user_marchIDs(username):
         return []
     
     else:
-        for n_page in range(page_nnnumber):
-            matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s&page=n'%(serverName,playerName,str(n_page+1))
+        for n_page in range(1,3):
+            matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s&page=%'%(serverName,playerName,str(n_page))
             re=spider.http_header(matchId_by_name_url)
             html=urllib2.urlopen(re).read()
             soup_html=spider.BeautifulSoup(html,"html.parser")
