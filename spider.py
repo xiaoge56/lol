@@ -57,9 +57,17 @@ def find_match_id(soup_html):
     match_id_set={}
     #soup = BeautifulSoup(html)
     li=soup_html.find_all(r'li')
+    typegame=soup_html.find_all(r'span','game')
+    typelist=[]
+    for ty in typegame:
+        typelist.append(ty.get_text())
+    
     match_id_list=[]
-    for id in li:
-        match_id_list.append(id['id'][3:])
+    for ids in li:
+        match_id_list.append(ids['id'][3:])
+    for x,y in zip(match_id_list,typelist):
+        match_id_set[x]=y
+    print match_id_set
     return match_id_list
 def deal_with_bs_data(player_data):
     '''从bs格式数据中取回需要的数据以及格式
@@ -94,7 +102,8 @@ def get_page_limit(soup_html):
     
     '''
     page_num=soup_html('span','page-num')
-    return page_num[0].get_text(strip=True,separator=u'|')[-1]
+    return page_num[0].get_text(strip=True,separator=u'|')[-2:]
+'''
 matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气'
 page_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气&page=8'
 battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId=12290959436&serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94&favorate=0'
@@ -107,7 +116,7 @@ re=http_header(url)
 html=urllib2.urlopen(re).read()
 soup_html=BeautifulSoup(html,"html.parser")
 page=get_page_limit(soup_html)
-
+'''
 
 #print find_match_id(html)
 #battle_detail_parse(html)

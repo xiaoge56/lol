@@ -2,6 +2,8 @@
 from collections import deque
 import logging
 import sys
+import spider
+import urllib2
 
 blink='\n'
 visited_MatchID=[]
@@ -11,6 +13,9 @@ deque_MatchID=deque()
 
 def init_choice():
     global deque_user
+    if len(deque_user)==0:
+        user_point=r'三纷绣气'
+        return user_point
     user_point=deque_user.popleft()
     return user_point
 def usr_info_spider(user_point):
@@ -27,7 +32,33 @@ def compute_undirect_graph(graph,user,neighbours):
     else:
         for neighbour in neighbours:
                 graph[user].add(neighbour)
+def find_user_marchIDs(username):
+    'search the target user latest 2page martch id'
+    matchid=[]
+    serverName=r'网通三'
+    playerName=username
+    
 
+    matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s'%(serverName,playerName)
+    re=spider.http_header(matchId_by_name_url)
+    html=urllib2.urlopen(re).read()
+    soup_html=spider.BeautifulSoup(html,"html.parser")
+    page_nnnumber=int(spider.get_page_limit(soup_html))
+
+    matchid.extend(spider.find_match_id(soup_html))#避免重复查询
+    
+    if page_nnnumber<=2:
+        logging.DEBUG('%s 用户数据过少，不予统计'%(username))
+        return []
+    
+    else:
+        for n_page in range(page_nnnumber):
+            matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s&page=n'%(serverName,playerName,str(n_page+1))
+            re=spider.http_header(matchId_by_name_url)
+            html=urllib2.urlopen(re).read()
+            soup_html=spider.BeautifulSoup(html,"html.parser")
+            matchid.extend(spider.find_match_id(soup_html))
+    return matchid
     
 def breadth_frist_search(start_user_point):
     'search the graph starting by one node using BFS'
@@ -46,7 +77,7 @@ def breadth_frist_search(start_user_point):
         visited_user.append(pre_deal_user)
 
         try:
-            deque_MatchID=find_user_marchIDs(pre_deal_user)
+            get_deque_MatchID=find_user_marchIDs(pre_deal_user)
         except HTTPError, e:
             write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
             logging.DEBUG('The server couldn\'t fulfill the request...deque_MatchID saved!')
@@ -57,14 +88,14 @@ def breadth_frist_search(start_user_point):
             #log
             print 'We failed to reach a server.'  
             print 'Reason: ', e.reason
-        
+        deque_MatchID.extend(get_deque_MatchID)
         for match in deque_MatchID:
             find_users,detail_dat=find_mathID_detail(match)
             save_detail_on_disk(detail_dat)
             
             for user in find_users:
                 if user not in visited_user:
-                    user_sequence.append(user)
+                    deque_user.append(user)
             
     return True
 def save_detail_on_disk(detail_dat):
@@ -145,9 +176,9 @@ def main():
     
     if breadth_frist_search(start_user_point):
         logging.info('Done')
-    else:
-        logging.info("error!")
+   # else:
+       # logging.info("error!")
     
-
-if __name__=='__main__':
-    main()
+find_user_marchIDs(r'三纷绣气')
+#if __name__=='__main__':
+ #   main()

@@ -1,2 +1,14 @@
-INFO:root:test.txt is None!!
-INFO:root:test.txt inited ok
+Tue, 07 Jul 2015 17:35:13 main.py[line:118] INFO /*----begin to init data----*/
+Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO visited_user.dat is None!!
+Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO visited_MatchID.dat is None!!
+Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO deque_user.dat is None!!
+Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO deque_MatchID.dat is None!!
+Tue, 07 Jul 2015 17:35:13 main.py[line:125] INFO initing user queue..
+Tue, 07 Jul 2015 17:35:13 main.py[line:126] INFO 0 users have been done
+Tue, 07 Jul 2015 17:35:13 main.py[line:127] INFO the current lengh of user_sequence is 0
+Tue, 07 Jul 2015 17:35:13 main.py[line:128] INFO 0 matches have been recorded
+Tue, 07 Jul 2015 17:35:13 main.py[line:129] INFO the current lengh of deque_MatchID is 0
+Tue, 07 Jul 2015 17:35:13 main.py[line:130] INFO /*-----------------------------------*/
+Tue, 07 Jul 2015 17:35:13 main.py[line:142] INFO init_dat ok... 
+Tue, 07 Jul 2015 17:35:13 main.py[line:146] INFO start_user_point get value:三纷绣气
+Tue, 07 Jul 2015 17:35:13 main.py[line:147] INFO begin to crawl data ... 
