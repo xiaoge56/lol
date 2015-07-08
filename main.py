@@ -92,6 +92,7 @@ def breadth_frist_search(start_user_point):
     deque_user.append(start_user_point)
 
     logging.info('Starting.....')
+    n=0
     while len(deque_user)!=0:
         
         pre_deal_user=deque_user.popleft()
@@ -113,19 +114,27 @@ def breadth_frist_search(start_user_point):
         deque_MatchID.extend(get_deque_MatchID)
         
         for match in deque_MatchID:
-            find_users,detail_dat=find_mathID_detail(match,pre_deal_user)
-            visited_MatchID.append(match)
-            save_detail_on_disk(detail_dat)
+            if match not in visited_MatchID:
+                print 'visited_MatchID:',visited_MatchID
+                print 'match:',match
+                find_users,detail_dat=find_mathID_detail(match,pre_deal_user)
+                visited_MatchID.append(match)
+                save_detail_on_disk(detail_dat)
             
-            for user in find_users:
-                if user not in visited_user:
-                    deque_user.append(user)
+                for user in find_users:
+                    
+                    if user not in visited_user:
+                        print 'visited_user:',visited_user
+                        print 'user:',user
+                        deque_user.append(user)
         write_next_init_file('./dat/deque_user.dat',deque_user)
-        write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
+        #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
         write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
         write_next_init_file('./dat/visited_user.dat',visited_user)
         logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
-        
+        n+=1
+        if n>10:
+            break
     return True
 def save_detail_on_disk(detail_dat):
     global blink
