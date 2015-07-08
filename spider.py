@@ -3,6 +3,9 @@ import urllib2
 import json
 from collections import deque 
 from bs4 import BeautifulSoup
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 lolskill={
 "http://img.lolbox.duowan.com/spells/1_24x24.jpg":1,
 "http://img.lolbox.duowan.com/spells/2_24x24.jpg":2,
@@ -45,7 +48,7 @@ def battle_detail_parse(soup_html):
         
         for every_player in div_layer:
             retDataList.append(deal_with_bs_data(every_player))
-            
+        
         return retDataList
     else:
         print '详细战斗数据为空'
@@ -58,7 +61,7 @@ def find_match_id(soup_html):
 
     keyword=[u'匹配赛',u'排位赛']
     match_id_set={}
-    another_set={}
+    return_set={}
     #soup = BeautifulSoup(html)
     li=soup_html.find_all(r'li')
     typegame=soup_html.find_all(r'span','game')
@@ -73,10 +76,9 @@ def find_match_id(soup_html):
         match_id_set[x]=y
     for key in match_id_set:
         if match_id_set[key] in keyword:
-            another_set[key]=match_id_set[key]
-    for x in another_set:
-        print x,another_set[x]
-    return match_id_list
+            return_set[key]=match_id_set[key]
+
+    return return_set
 def deal_with_bs_data(player_data):
     '''从bs格式数据中取回需要的数据以及格式
         
@@ -103,7 +105,7 @@ def deal_with_bs_data(player_data):
     for x in damage[4:]:
         data.append(x.split('|')[1])
     
-    print data
+    return data
 def get_page_limit(soup_html):
     '''
     对于每一个用户来说，这个函数应该只能被调用一次。返回用户战斗记录的页面长度

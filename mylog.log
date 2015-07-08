@@ -1,14 +1,31 @@
-Tue, 07 Jul 2015 17:35:13 main.py[line:118] INFO /*----begin to init data----*/
-Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO visited_user.dat is None!!
-Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO visited_MatchID.dat is None!!
-Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO deque_user.dat is None!!
-Tue, 07 Jul 2015 17:35:13 main.py[line:95] INFO deque_MatchID.dat is None!!
-Tue, 07 Jul 2015 17:35:13 main.py[line:125] INFO initing user queue..
-Tue, 07 Jul 2015 17:35:13 main.py[line:126] INFO 0 users have been done
-Tue, 07 Jul 2015 17:35:13 main.py[line:127] INFO the current lengh of user_sequence is 0
-Tue, 07 Jul 2015 17:35:13 main.py[line:128] INFO 0 matches have been recorded
-Tue, 07 Jul 2015 17:35:13 main.py[line:129] INFO the current lengh of deque_MatchID is 0
-Tue, 07 Jul 2015 17:35:13 main.py[line:130] INFO /*-----------------------------------*/
-Tue, 07 Jul 2015 17:35:13 main.py[line:142] INFO init_dat ok... 
-Tue, 07 Jul 2015 17:35:13 main.py[line:146] INFO start_user_point get value:三纷绣气
-Tue, 07 Jul 2015 17:35:13 main.py[line:147] INFO begin to crawl data ... 
+Wed, 08 Jul 2015 19:49:10 main.py[line:176] INFO /*----begin to init data----*/
+Wed, 08 Jul 2015 19:49:10 main.py[line:153] INFO visited_user.dat is None!!
+Wed, 08 Jul 2015 19:49:10 main.py[line:153] INFO visited_MatchID.dat is None!!
+Wed, 08 Jul 2015 19:49:10 main.py[line:153] INFO deque_user.dat is None!!
+Wed, 08 Jul 2015 19:49:10 main.py[line:153] INFO deque_MatchID.dat is None!!
+Wed, 08 Jul 2015 19:49:10 main.py[line:183] INFO initing user queue..
+Wed, 08 Jul 2015 19:49:10 main.py[line:184] INFO 0 users have been done
+Wed, 08 Jul 2015 19:49:10 main.py[line:185] INFO the current lengh of user_sequence is 0
+Wed, 08 Jul 2015 19:49:10 main.py[line:186] INFO 0 matches have been recorded
+Wed, 08 Jul 2015 19:49:10 main.py[line:187] INFO the current lengh of deque_MatchID is 0
+Wed, 08 Jul 2015 19:49:10 main.py[line:188] INFO /*-----------------------------------*/
+Wed, 08 Jul 2015 19:49:10 main.py[line:200] INFO init_dat ok... 
+Wed, 08 Jul 2015 19:49:10 main.py[line:204] INFO start_user_point get value:三纷绣气
+Wed, 08 Jul 2015 19:49:10 main.py[line:205] INFO begin to crawl data ... 
+Wed, 08 Jul 2015 19:49:10 main.py[line:96] INFO Starting.....
+Wed, 08 Jul 2015 19:52:14 main.py[line:176] INFO /*-----------------------------------*/
+Wed, 08 Jul 2015 19:52:14 main.py[line:177] INFO /*--begin to init data--*/
+Wed, 08 Jul 2015 19:52:14 main.py[line:153] INFO visited_user.dat is None!!
+Wed, 08 Jul 2015 19:52:14 main.py[line:153] INFO visited_MatchID.dat is None!!
+Wed, 08 Jul 2015 19:52:14 main.py[line:153] INFO deque_user.dat is None!!
+Wed, 08 Jul 2015 19:52:14 main.py[line:153] INFO deque_MatchID.dat is None!!
+Wed, 08 Jul 2015 19:52:14 main.py[line:184] INFO initing user queue..
+Wed, 08 Jul 2015 19:52:14 main.py[line:185] INFO 0 users have been done
+Wed, 08 Jul 2015 19:52:14 main.py[line:186] INFO the current lengh of user_sequence is 0
+Wed, 08 Jul 2015 19:52:14 main.py[line:187] INFO 0 matches have been recorded
+Wed, 08 Jul 2015 19:52:14 main.py[line:188] INFO the current lengh of deque_MatchID is 0
+Wed, 08 Jul 2015 19:52:14 main.py[line:189] INFO /*-----------------------------------*/
+Wed, 08 Jul 2015 19:52:14 main.py[line:201] INFO init_dat ok... 
+Wed, 08 Jul 2015 19:52:14 main.py[line:205] INFO start_user_point get value:三纷绣气
+Wed, 08 Jul 2015 19:52:14 main.py[line:206] INFO begin to crawl data ... 
+Wed, 08 Jul 2015 19:52:14 main.py[line:96] INFO Starting.....
