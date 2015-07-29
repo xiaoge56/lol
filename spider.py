@@ -113,20 +113,23 @@ def get_page_limit(soup_html):
     '''
     page_num=soup_html('span','page-num')
     return page_num[0].get_text(strip=True,separator=u'|')[-2:]
-'''
-matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气'
-page_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气&page=8'
-battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId=12290959436&serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94&favorate=0'
 
-martch_id_deque=deque()
-visited_deque=deque()
-
-url=matchId_by_name_url
-re=http_header(url)
-html=urllib2.urlopen(re).read()
-soup_html=BeautifulSoup(html,"html.parser")
-page=get_page_limit(soup_html)
-'''
-
-#print find_match_id(html)
-#battle_detail_parse(html)
+def main():
+    
+    matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气'
+    page_url=r'http://lolbox.duowan.com/matchList.php?serverName=网通三&playerName=三纷绣气&page=8'
+    battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId=12290959436&serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94&favorate=0'
+    
+    martch_id_deque=deque()
+    visited_deque=deque()
+    
+    url=matchId_by_name_url
+    re=http_header(url)
+    html=urllib2.urlopen(re).read()
+    soup_html=BeautifulSoup(html,"html.parser")
+    page=get_page_limit(soup_html)
+    print page
+    #print find_match_id(html)
+    #battle_detail_parse(html)
+if __name__=='__main__':
+    main()

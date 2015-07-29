@@ -220,9 +220,6 @@ def main():
     else:
         logging.info("error!")
    
-#matchid=find_user_marchIDs(r'三纷绣气')
-#for ids in matchid:
-#    find_mathID_detail(ids,r'三纷绣气')
     
 if __name__=='__main__':
     
