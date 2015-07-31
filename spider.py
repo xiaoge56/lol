@@ -128,8 +128,8 @@ def main():
     html=urllib2.urlopen(re).read()
     soup_html=BeautifulSoup(html,"html.parser")
     page=get_page_limit(soup_html)
-    print page
+    
     #print find_match_id(html)
     #battle_detail_parse(html)
 if __name__=='__main__':
-    main()
+    main

@@ -88,6 +88,8 @@ def breadth_frist_search(start_user_point):
     global visited_MatchID
     global deque_user
     
+    visited_MatchID=visited_MatchID
+    deque_user=deque_user
     
     deque_user.append(start_user_point)
 
@@ -96,21 +98,28 @@ def breadth_frist_search(start_user_point):
     while len(deque_user)!=0:
         
         pre_deal_user=deque_user.popleft()
-        visited_user.append(pre_deal_user)
 
+        if pre_deal_user not in visited_user:
+            visited_user.append(pre_deal_user)
+        else:
+            print 'some bug!,this words should not be shown!'
+        
         try:
             get_deque_MatchID=find_user_marchIDs(pre_deal_user)
-             
+            if len(get_deque_MatchID)<1:
+                '如果返回的数据为空,也就是数据过少'
+                logging.info('the data of current user (%s) is small ,so drop it and continue '%(pre_deal_user))
+                continue
         except urllib2.HTTPError,e:
             write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
             logging.DEBUG('The server couldn\'t fulfill the request...deque_MatchID saved!')
             print 'The server couldn\'t fulfill the request.'  
             print 'Error code: ', e.code
-            
         except urllib2.URLError, e:
             #log
             print 'We failed to reach a server.'  
             print 'Reason: ', e.reason
+        #返回当前用户的matchID
         deque_MatchID.extend(get_deque_MatchID)
         
         for match in deque_MatchID:
@@ -148,11 +157,11 @@ def save_detail_on_disk(detail_dat):
         logging.DEBUG('./dat/user.dat can not open!')
         
 def init_read_file(path,result):
-    'reading the last time record when continue to do work'
+    'reading the last time record when continue to work'
 
     
     name=path.split(r'/')[-1]
-    
+    print path
     with open(path) as f:
         for line in f:
             result.append(line.split()[0])

@@ -16,10 +16,10 @@ def main():
             m='||'.join(i)
             f.write(m+blink)
     f.close()
-
+    print 'aaa'
 if __name__=='__main__':
     print 'aaa'
-    raw_input()
+    main()
     
 
 print 'a'
