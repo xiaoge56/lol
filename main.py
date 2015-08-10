@@ -17,12 +17,12 @@ deque_user_disk=deque()
 deque_MatchID_disk=deque()
 
 def init_choice():
-    global deque_user
-    if len(deque_user)==0:
+    global deque_user_disk
+    if len(deque_user_disk)==0:
         user_point=r'三纷绣气'
         return user_point
     else:
-        user_point=deque_user.popleft()
+        user_point=deque_user_disk.popleft()
         return user_point
 def usr_info_spider(user_point):
     '''

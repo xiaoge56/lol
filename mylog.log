@@ -110,3 +110,16 @@ Tue, 11 Aug 2015 00:16:08 main.py[line:153] INFO new deque_user,deque_MatchID,vi
 Tue, 11 Aug 2015 00:16:11 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
 Tue, 11 Aug 2015 00:16:16 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
 Tue, 11 Aug 2015 00:16:16 main.py[line:238] INFO Done
+Tue, 11 Aug 2015 00:19:39 main.py[line:196] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:19:39 main.py[line:197] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:19:39 main.py[line:171] INFO visited_user.dat inited ok
+Tue, 11 Aug 2015 00:19:39 main.py[line:171] INFO visited_MatchID.dat inited ok
+Tue, 11 Aug 2015 00:19:39 main.py[line:171] INFO deque_user.dat inited ok
+Tue, 11 Aug 2015 00:19:39 main.py[line:173] INFO deque_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:19:39 main.py[line:204] INFO initing user queue..
+Tue, 11 Aug 2015 00:19:39 main.py[line:205] INFO 12 users have been done
+Tue, 11 Aug 2015 00:19:39 main.py[line:206] INFO the current lengh of user_sequence is 809
+Tue, 11 Aug 2015 00:19:39 main.py[line:207] INFO 93 matches have been recorded
+Tue, 11 Aug 2015 00:19:39 main.py[line:208] INFO the current lengh of deque_MatchID is 0
+Tue, 11 Aug 2015 00:19:39 main.py[line:209] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:19:39 main.py[line:221] INFO init_dat ok... 
