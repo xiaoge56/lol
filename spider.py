@@ -132,4 +132,4 @@ def main():
     #print find_match_id(html)
     #battle_detail_parse(html)
 if __name__=='__main__':
-    main
+    main()
