@@ -2,3 +2,111 @@ Fri, 31 Jul 2015 19:20:48 main.py[line:194] INFO /*-----------------------------
 Fri, 31 Jul 2015 19:20:48 main.py[line:195] INFO /*--begin to init data--*/
 Fri, 31 Jul 2015 19:20:48 main.py[line:171] INFO visited_user.dat is None!!
 Fri, 31 Jul 2015 19:20:48 main.py[line:169] INFO visited_MatchID.dat inited ok
+Tue, 11 Aug 2015 00:05:34 main.py[line:202] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:05:34 main.py[line:203] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:05:34 main.py[line:179] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:05:34 main.py[line:177] INFO visited_MatchID.dat inited ok
+Tue, 11 Aug 2015 00:06:14 main.py[line:202] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:06:14 main.py[line:203] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:06:42 main.py[line:202] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:06:42 main.py[line:203] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:06:42 main.py[line:179] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:06:59 main.py[line:202] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:06:59 main.py[line:203] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:06:59 main.py[line:179] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:06:59 main.py[line:179] INFO visited_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:07:12 main.py[line:202] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:07:12 main.py[line:203] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:07:12 main.py[line:179] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:07:12 main.py[line:179] INFO visited_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:07:12 main.py[line:179] INFO deque_user.dat is None!!
+Tue, 11 Aug 2015 00:07:29 main.py[line:202] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:07:29 main.py[line:203] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:07:29 main.py[line:179] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:07:29 main.py[line:179] INFO visited_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:07:29 main.py[line:179] INFO deque_user.dat is None!!
+Tue, 11 Aug 2015 00:07:29 main.py[line:179] INFO deque_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:07:29 main.py[line:210] INFO initing user queue..
+Tue, 11 Aug 2015 00:07:29 main.py[line:211] INFO 0 users have been done
+Tue, 11 Aug 2015 00:07:29 main.py[line:212] INFO the current lengh of user_sequence is 0
+Tue, 11 Aug 2015 00:07:29 main.py[line:213] INFO 0 matches have been recorded
+Tue, 11 Aug 2015 00:07:29 main.py[line:214] INFO the current lengh of deque_MatchID is 0
+Tue, 11 Aug 2015 00:07:29 main.py[line:215] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:07:29 main.py[line:227] INFO init_dat ok... 
+Tue, 11 Aug 2015 00:08:05 main.py[line:202] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:08:05 main.py[line:203] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:08:05 main.py[line:179] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:08:05 main.py[line:179] INFO visited_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:08:05 main.py[line:179] INFO deque_user.dat is None!!
+Tue, 11 Aug 2015 00:08:05 main.py[line:179] INFO deque_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:08:05 main.py[line:210] INFO initing user queue..
+Tue, 11 Aug 2015 00:08:05 main.py[line:211] INFO 0 users have been done
+Tue, 11 Aug 2015 00:08:05 main.py[line:212] INFO the current lengh of user_sequence is 0
+Tue, 11 Aug 2015 00:08:05 main.py[line:213] INFO 0 matches have been recorded
+Tue, 11 Aug 2015 00:08:05 main.py[line:214] INFO the current lengh of deque_MatchID is 0
+Tue, 11 Aug 2015 00:08:05 main.py[line:215] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:08:05 main.py[line:227] INFO init_dat ok... 
+Tue, 11 Aug 2015 00:08:05 main.py[line:231] INFO start_user_point get value:三纷绣气
+Tue, 11 Aug 2015 00:08:05 main.py[line:232] INFO begin to crawl data ... 
+Tue, 11 Aug 2015 00:08:05 main.py[line:101] INFO Starting.....
+Tue, 11 Aug 2015 00:09:07 main.py[line:203] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:09:07 main.py[line:204] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:09:07 main.py[line:180] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:09:07 main.py[line:180] INFO visited_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:09:07 main.py[line:180] INFO deque_user.dat is None!!
+Tue, 11 Aug 2015 00:09:07 main.py[line:180] INFO deque_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:09:07 main.py[line:211] INFO initing user queue..
+Tue, 11 Aug 2015 00:09:07 main.py[line:212] INFO 0 users have been done
+Tue, 11 Aug 2015 00:09:07 main.py[line:213] INFO the current lengh of user_sequence is 0
+Tue, 11 Aug 2015 00:09:07 main.py[line:214] INFO 0 matches have been recorded
+Tue, 11 Aug 2015 00:09:07 main.py[line:215] INFO the current lengh of deque_MatchID is 0
+Tue, 11 Aug 2015 00:09:07 main.py[line:216] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:09:07 main.py[line:228] INFO init_dat ok... 
+Tue, 11 Aug 2015 00:09:07 main.py[line:232] INFO start_user_point get value:三纷绣气
+Tue, 11 Aug 2015 00:09:07 main.py[line:233] INFO begin to crawl data ... 
+Tue, 11 Aug 2015 00:09:07 main.py[line:102] INFO Starting.....
+Tue, 11 Aug 2015 00:10:15 main.py[line:203] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:10:15 main.py[line:204] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:10:15 main.py[line:180] INFO visited_user.dat is None!!
+Tue, 11 Aug 2015 00:10:15 main.py[line:180] INFO visited_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:10:15 main.py[line:180] INFO deque_user.dat is None!!
+Tue, 11 Aug 2015 00:10:15 main.py[line:180] INFO deque_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:10:15 main.py[line:211] INFO initing user queue..
+Tue, 11 Aug 2015 00:10:15 main.py[line:212] INFO 0 users have been done
+Tue, 11 Aug 2015 00:10:15 main.py[line:213] INFO the current lengh of user_sequence is 0
+Tue, 11 Aug 2015 00:10:15 main.py[line:214] INFO 0 matches have been recorded
+Tue, 11 Aug 2015 00:10:15 main.py[line:215] INFO the current lengh of deque_MatchID is 0
+Tue, 11 Aug 2015 00:10:15 main.py[line:216] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:10:15 main.py[line:228] INFO init_dat ok... 
+Tue, 11 Aug 2015 00:10:15 main.py[line:232] INFO start_user_point get value:三纷绣气
+Tue, 11 Aug 2015 00:10:15 main.py[line:233] INFO begin to crawl data ... 
+Tue, 11 Aug 2015 00:10:15 main.py[line:102] INFO Starting.....
+Tue, 11 Aug 2015 00:10:23 main.py[line:152] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:15:28 main.py[line:204] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:15:28 main.py[line:205] INFO /*--begin to init data--*/
+Tue, 11 Aug 2015 00:15:28 main.py[line:179] INFO visited_user.dat inited ok
+Tue, 11 Aug 2015 00:15:28 main.py[line:179] INFO visited_MatchID.dat inited ok
+Tue, 11 Aug 2015 00:15:28 main.py[line:179] INFO deque_user.dat inited ok
+Tue, 11 Aug 2015 00:15:28 main.py[line:181] INFO deque_MatchID.dat is None!!
+Tue, 11 Aug 2015 00:15:28 main.py[line:212] INFO initing user queue..
+Tue, 11 Aug 2015 00:15:28 main.py[line:213] INFO 1 users have been done
+Tue, 11 Aug 2015 00:15:28 main.py[line:214] INFO the current lengh of user_sequence is 117
+Tue, 11 Aug 2015 00:15:28 main.py[line:215] INFO 13 matches have been recorded
+Tue, 11 Aug 2015 00:15:28 main.py[line:216] INFO the current lengh of deque_MatchID is 0
+Tue, 11 Aug 2015 00:15:28 main.py[line:217] INFO /*-----------------------------------*/
+Tue, 11 Aug 2015 00:15:28 main.py[line:229] INFO init_dat ok... 
+Tue, 11 Aug 2015 00:15:28 main.py[line:233] INFO start_user_point get value:Zz丨Aunty丶yiNg
+Tue, 11 Aug 2015 00:15:28 main.py[line:234] INFO begin to crawl data ... 
+Tue, 11 Aug 2015 00:15:28 main.py[line:102] INFO Starting.....
+Tue, 11 Aug 2015 00:15:35 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:15:39 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:15:44 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:15:49 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:15:55 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:15:58 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:16:03 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:16:04 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:16:08 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:16:11 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:16:16 main.py[line:153] INFO new deque_user,deque_MatchID,visited_user,visited_MatchID had been recorded
+Tue, 11 Aug 2015 00:16:16 main.py[line:238] INFO Done
