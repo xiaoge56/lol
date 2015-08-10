@@ -11,18 +11,19 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 blink='\n'
-visited_MatchID=[]
-visited_user=[]
-deque_user=deque()
-deque_MatchID=deque()
+visited_MatchID_disk=[]
+visited_user_disk=[]
+deque_user_disk=deque()
+deque_MatchID_disk=deque()
 
 def init_choice():
     global deque_user
     if len(deque_user)==0:
         user_point=r'三纷绣气'
         return user_point
-    user_point=deque_user.popleft()
-    return user_point
+    else:
+        user_point=deque_user.popleft()
+        return user_point
 def usr_info_spider(user_point):
     '''
     do spider and save the data
@@ -37,7 +38,7 @@ def compute_undirect_graph(graph,user,neighbours):
     else:
         for neighbour in neighbours:
                 graph[user].add(neighbour)
-def find_user_marchIDs(username):
+def find_user_matchIDs(username):
     'search the target user latest 3page martch id'
     matchid=[]
     serverName=r'网通三'
@@ -50,7 +51,7 @@ def find_user_marchIDs(username):
     soup_html=spider.BeautifulSoup(html,"html.parser")
     page_nnnumber=int(spider.get_page_limit(soup_html))
     
-    matchid.extend(spider.find_match_id(soup_html))#避免重复查询
+    matchid.extend(spider.find_match_id(soup_html))#page_nnnumber默认从0开始，记录数据，避免后续重复查询
     
     if page_nnnumber<=2:
         logging.DEBUG('%s 用户数据过少，不予统计'%(username))
@@ -83,32 +84,33 @@ def find_mathID_detail(matchId,user_id):
     
 def breadth_frist_search(start_user_point):
     'search the graph starting by one node using BFS'
-    global visited_user
-    global deque_MatchID
-    global visited_MatchID
-    global deque_user
+    global visited_user_disk
+    global deque_MatchID_disk
+    global visited_MatchID_disk
+    global deque_user_disk
     
-    visited_MatchID=visited_MatchID
-    deque_user=deque_user
+    visited_MatchID=visited_MatchID_disk
+    deque_user=deque_user_disk#上次未完成工作进度,默认从头开始
     
     deque_user.append(start_user_point)
-
+    
     logging.info('Starting.....')
     n=0
     while len(deque_user)!=0:
         
-        pre_deal_user=deque_user.popleft()
+        current_user_node=deque_user.popleft()
 
-        if pre_deal_user not in visited_user:
-            visited_user.append(pre_deal_user)
+        if current_user_node not in visited_user:
+            visited_user.append(current_user_node)
         else:
             print 'some bug!,this words should not be shown!'
         
         try:
-            get_deque_MatchID=find_user_marchIDs(pre_deal_user)
+            get_deque_MatchID=find_user_matchIDs(current_user_node)#找到一个user的所有marchIds
+            #返回的是一个包含字典的列表，字典中key是matchId，value是本次Id的模式
             if len(get_deque_MatchID)<1:
                 '如果返回的数据为空,也就是数据过少'
-                logging.info('the data of current user (%s) is small ,so drop it and continue '%(pre_deal_user))
+                logging.info('the data of current user (%s) is small ,so drop it and continue '%(current_user_node))
                 continue
         except urllib2.HTTPError,e:
             write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
@@ -122,11 +124,11 @@ def breadth_frist_search(start_user_point):
         #返回当前用户的matchID
         deque_MatchID.extend(get_deque_MatchID)
         
-        for match in deque_MatchID:
+        for match in deque_MatchID:#处理当前用户的所有marchid数据
             if match not in visited_MatchID:
                 print 'visited_MatchID:',visited_MatchID
                 print 'match:',match
-                find_users,detail_dat=find_mathID_detail(match,pre_deal_user)
+                find_users,detail_dat=find_mathID_detail(match,current_user_node)
                 visited_MatchID.append(match)
                 save_detail_on_disk(detail_dat)
             
@@ -183,10 +185,10 @@ def write_next_init_file(path,content_list):
 def init_dat():
     'init history dat:visited_user,deque_user,visited_MatchID,deque_MatchID'
 
-    global visited_user
-    global visited_MatchID
-    global deque_user
-    global deque_MatchID
+    global visited_user_disk
+    global visited_MatchID_disk
+    global deque_user_disk
+    global deque_MatchID_disk
     
     #with open('./dat/visited_user.dat','r') as f:
      #   for line
@@ -194,16 +196,16 @@ def init_dat():
     logging.info('/*-----------------------------------*/')
     logging.info('/*--begin to init data--*/')
 
-    init_read_file('./dat/visited_user.dat',visited_user)
-    init_read_file('./dat/visited_MatchID.dat',visited_MatchID)
-    init_read_file('./dat/deque_user.dat',deque_user)
-    init_read_file('./dat/deque_MatchID.dat',deque_MatchID)
+    init_read_file('./dat/visited_user.dat',visited_user_disk)
+    init_read_file('./dat/visited_MatchID.dat',visited_MatchID_disk)
+    init_read_file('./dat/deque_user.dat',deque_user_disk)
+    init_read_file('./dat/deque_MatchID.dat',deque_MatchID_disk)
 
     logging.info('initing user queue..')
-    logging.info('%d users have been done'% len(visited_user))
-    logging.info('the current lengh of user_sequence is %d'% len(deque_user))
-    logging.info ('%d matches have been recorded'% len(visited_MatchID))
-    logging.info('the current lengh of deque_MatchID is %d'% len(deque_MatchID))
+    logging.info('%d users have been done'% len(visited_user_disk))
+    logging.info('the current lengh of user_sequence is %d'% len(deque_user_disk))
+    logging.info ('%d matches have been recorded'% len(visited_MatchID_disk))
+    logging.info('the current lengh of deque_MatchID is %d'% len(deque_MatchID_disk))
     logging.info('/*-----------------------------------*/')
 def main():
 
