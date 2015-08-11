@@ -50,8 +50,9 @@ def find_user_matchIDs(username):
     html=urllib2.urlopen(re).read()
     soup_html=spider.BeautifulSoup(html,"html.parser")
     page_nnnumber=int(spider.get_page_limit(soup_html))
-    
-    matchid.extend(spider.find_match_id(soup_html))#page_nnnumber默认从0开始，记录数据，避免后续重复查询
+    t=spider.find_match_id(soup_html)
+    matchid.extend(t)#page_nnnumber默认从0开始，记录数据，避免后续重复查询
+    print '第%s页有%s条数据,当前一共%s数据'%(1,len(t),len(matchid))
     
     if page_nnnumber<=2:
         logging.DEBUG('%s 用户数据过少，不予统计'%(username))
@@ -59,11 +60,14 @@ def find_user_matchIDs(username):
     
     else:
         for n_page in range(1,4):
-            matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s&page=%s'%(serverName,playerName,str(n_page))
+            matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s&page=%s'%(serverName,playerName,str(n_page+1))
             re=spider.http_header(matchId_by_name_url)
             html=urllib2.urlopen(re).read()
             soup_html=spider.BeautifulSoup(html,"html.parser")
-            matchid.extend(spider.find_match_id(soup_html))
+            temp=spider.find_match_id(soup_html)
+            
+            matchid.extend(temp)
+            print '第%s页有%s条数据,当前一共%s数据'%(n_page+1,len(temp),len(matchid))
             if len(matchid)>15:
                 break
     return matchid
@@ -127,11 +131,12 @@ def breadth_frist_search(start_user_point):
             print 'Reason: ', e.reason
         #返回当前用户的matchID
         deque_MatchID.extend(get_deque_MatchID)
-        
+        print '%s 有%s条记录'%(current_user_node,len(deque_MatchID))
+        count=0
+        print '已经记录过这些id:',visited_MatchID
         for match in deque_MatchID:#处理当前用户的所有marchid数据
             if match not in visited_MatchID:
-                print 'visited_MatchID:',visited_MatchID
-                print 'deque_user:',deque_user
+                
                 find_users,detail_dat=find_mathID_detail(match,current_user_node)
                 visited_MatchID.append(match)
                 save_detail_on_disk(detail_dat)
@@ -141,15 +146,20 @@ def breadth_frist_search(start_user_point):
                     if user not in visited_user and user not in deque_user:
                         #出现问题，会有重复的user_id出现在deque_user中，原因是，vistied_user由于每次只添加一个，更新速度慢
                         deque_user.append(user)
+            else:
+                count+=1
+                print '已经记录过了1次,当前的matchid是:',match
                 # print 'deque_user:',deque_user
+        print '%s 有%s条记录'%(current_user_node,len(deque_MatchID)+count)
         write_next_init_file('./dat/deque_user.dat',deque_user)
         #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
         write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
         write_next_init_file('./dat/visited_user.dat',visited_user)
         logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
         n+=1
-        if n>10:
-            break
+        # if n>10:
+        #     break
+        break
     return True
 def save_detail_on_disk(detail_dat):
     global blink

@@ -77,7 +77,7 @@ def find_match_id(soup_html):
     for key in match_id_set:
         if match_id_set[key] in keyword:
             return_set[key]=match_id_set[key]
-
+    print  return_set       
     return return_set
 def deal_with_bs_data(player_data):
     '''从bs格式数据中取回需要的数据以及格式
@@ -127,9 +127,11 @@ def main():
     re=http_header(url)
     html=urllib2.urlopen(re).read()
     soup_html=BeautifulSoup(html,"html.parser")
-    page=get_page_limit(soup_html)
+    # page=get_page_limit(soup_html)
     
-    #print find_match_id(html)
+    m=find_match_id(soup_html)
+    for key in m:
+        print key,m[key]
     #battle_detail_parse(html)
 if __name__=='__main__':
     main()
