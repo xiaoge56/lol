@@ -85,12 +85,14 @@ def find_mathID_detail(matchId,user_id):
 def breadth_frist_search(start_user_point):
     'search the graph starting by one node using BFS'
     global visited_user_disk
-    global deque_MatchID_disk
+    # global deque_MatchID_disk
     global visited_MatchID_disk
     global deque_user_disk
     
     visited_MatchID=visited_MatchID_disk
     deque_user=deque_user_disk#上次未完成工作进度,默认从头开始
+    visited_user=visited_user_disk
+    deque_MatchID=deque()
     
     deque_user.append(start_user_point)
     
@@ -104,6 +106,8 @@ def breadth_frist_search(start_user_point):
             visited_user.append(current_user_node)
         else:
             print 'some bug!,this words should not be shown!'
+            print n
+            break
         
         try:
             get_deque_MatchID=find_user_matchIDs(current_user_node)#找到一个user的所有marchIds
@@ -127,17 +131,17 @@ def breadth_frist_search(start_user_point):
         for match in deque_MatchID:#处理当前用户的所有marchid数据
             if match not in visited_MatchID:
                 print 'visited_MatchID:',visited_MatchID
-                print 'match:',match
+                print 'deque_user:',deque_user
                 find_users,detail_dat=find_mathID_detail(match,current_user_node)
                 visited_MatchID.append(match)
                 save_detail_on_disk(detail_dat)
             
                 for user in find_users:
                     
-                    if user not in visited_user:
-                        print 'visited_user:',visited_user
-                        print 'user:',user
+                    if user not in visited_user and user not in deque_user:
+                        #出现问题，会有重复的user_id出现在deque_user中，原因是，vistied_user由于每次只添加一个，更新速度慢
                         deque_user.append(user)
+                # print 'deque_user:',deque_user
         write_next_init_file('./dat/deque_user.dat',deque_user)
         #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
         write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
@@ -163,7 +167,7 @@ def init_read_file(path,result):
 
     
     name=path.split(r'/')[-1]
-    print path
+    #print path
     with open(path) as f:
         for line in f:
             result.append(line.split()[0])
