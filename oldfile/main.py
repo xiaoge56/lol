@@ -24,11 +24,7 @@ def init_choice():
     else:
         user_point=deque_user_disk.popleft()
         return user_point
-def usr_info_spider(user_point):
-    '''
-    do spider and save the data
-    '''
-    return user_point.neighbours
+
 def compute_undirect_graph(graph,user,neighbours):
     'construct a undirect graph of user_point info'
     if user not in graph.keys():
