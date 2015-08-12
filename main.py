@@ -155,7 +155,7 @@ def breadth_frist_search(start_user_point):
                 # print '已经记录过了1次,当前的matchid是:',match
                 # print 'deque_user:',deque_user
         # print '%s 有%s条记录'%(current_user_node,len(get_deque_MatchID)+count)
-        if n%100==0:
+        if n%10==0:
             write_next_init_file('./dat/deque_user.dat',deque_user)
             #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
             write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
