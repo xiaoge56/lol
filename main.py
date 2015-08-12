@@ -52,7 +52,7 @@ def find_user_matchIDs(username):
     page_nnnumber=int(spider.get_page_limit(soup_html))
     t=spider.find_match_id(soup_html)
     matchid.extend(t)#page_nnnumber默认从0开始，记录数据，避免后续重复查询
-    print '第%s页有%s条数据,当前一共%s数据'%(1,len(t),len(matchid))
+    # print '第%s页有%s条数据,当前一共%s数据'%(1,len(t),len(matchid))
     
     if page_nnnumber<=2:
         logging.DEBUG('%s 用户数据过少，不予统计'%(username))
@@ -67,7 +67,7 @@ def find_user_matchIDs(username):
             temp=spider.find_match_id(soup_html)
             
             matchid.extend(temp)
-            print '第%s页有%s条数据,当前一共%s数据'%(n_page+1,len(temp),len(matchid))
+            # print '第%s页有%s条数据,当前一共%s数据'%(n_page+1,len(temp),len(matchid))
             if len(matchid)>15:
                 break
     return matchid
@@ -81,9 +81,11 @@ def find_mathID_detail(matchId,user_id):
     html=urllib2.urlopen(re).read()
     soup_html=BeautifulSoup(html,"html.parser")
     detail_dat=spider.battle_detail_parse(soup_html)
-    for item in detail_dat:
-        find_users.append(item[0])
-
+    if len(detail_dat)!=0:
+         for item in detail_dat:
+             find_users.append(item[0])
+    else:
+        return find_users,detail_dat
     return find_users,detail_dat
     
 def breadth_frist_search(start_user_point):
@@ -105,7 +107,7 @@ def breadth_frist_search(start_user_point):
     while len(deque_user)!=0:
         
         current_user_node=deque_user.popleft()
-
+        print 'current_user_node:{name},{times}'.format(name=current_user_node,times=n)
         if current_user_node not in visited_user:
             visited_user.append(current_user_node)
         else:
@@ -131,35 +133,38 @@ def breadth_frist_search(start_user_point):
             print 'Reason: ', e.reason
         #返回当前用户的matchID
         deque_MatchID.extend(get_deque_MatchID)
-        print '%s 有%s条记录'%(current_user_node,len(deque_MatchID))
-        count=0
-        print '已经记录过这些id:',visited_MatchID
+        # print '%s 有%s条记录'%(current_user_node,len(get_deque_MatchID))
+        # count=0
+        # print '已经记录过这些id:',visited_MatchID
         for match in deque_MatchID:#处理当前用户的所有marchid数据
             if match not in visited_MatchID:
                 
                 find_users,detail_dat=find_mathID_detail(match,current_user_node)
-                visited_MatchID.append(match)
-                save_detail_on_disk(detail_dat)
-            
+                if len(detail_dat)!=0:
+                    visited_MatchID.append(match)
+                    save_detail_on_disk(detail_dat)
+                else:
+                    break
                 for user in find_users:
                     
                     if user not in visited_user and user not in deque_user:
                         #出现问题，会有重复的user_id出现在deque_user中，原因是，vistied_user由于每次只添加一个，更新速度慢
                         deque_user.append(user)
-            else:
-                count+=1
-                print '已经记录过了1次,当前的matchid是:',match
+            # else:
+                # count+=1
+                # print '已经记录过了1次,当前的matchid是:',match
                 # print 'deque_user:',deque_user
-        print '%s 有%s条记录'%(current_user_node,len(deque_MatchID)+count)
-        write_next_init_file('./dat/deque_user.dat',deque_user)
-        #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
-        write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
-        write_next_init_file('./dat/visited_user.dat',visited_user)
-        logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
+        # print '%s 有%s条记录'%(current_user_node,len(get_deque_MatchID)+count)
+        if n%100==0:
+            write_next_init_file('./dat/deque_user.dat',deque_user)
+            #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
+            write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
+            write_next_init_file('./dat/visited_user.dat',visited_user)
+            logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
         n+=1
         # if n>10:
-        #     break
-        break
+            # break
+        
     return True
 def save_detail_on_disk(detail_dat):
     global blink

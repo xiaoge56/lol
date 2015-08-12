@@ -52,7 +52,7 @@ def battle_detail_parse(soup_html):
         return retDataList
     else:
         print '详细战斗数据为空'
-
+        return retDataList
 def find_match_id(soup_html):
     '''返回战斗场次的id
     返回一个字典，key是matchId，value是这次Id的模式，比如匹配赛|大乱斗|排位赛
@@ -77,7 +77,7 @@ def find_match_id(soup_html):
     for key in match_id_set:
         if match_id_set[key] in keyword:
             return_set[key]=match_id_set[key]
-    print  return_set       
+    # print  return_set       
     return return_set
 def deal_with_bs_data(player_data):
     '''从bs格式数据中取回需要的数据以及格式
