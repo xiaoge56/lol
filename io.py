@@ -1,18 +1,20 @@
 #coding:utf-8
 from collections import deque
+import pickle as pk
+import sys
 class MyInit():
     def __init__(self):
         self.visited_user_disk=self.init_read_file('./dat/visited_user.dat')
         self.visited_MatchID_disk=self.init_read_file('./dat/visited_MatchID.dat')
         self.deque_user_disk=self.init_read_file('./dat/deque_user.dat')
         self.deque_MatchID_disk=self.init_read_file('./dat/deque_MatchID.dat')
-        
-        self.start_user=self.init_choice()
+        self.global_users_dat_count=self.__read_dat__into__dict()
+        self.start_user=self.__init_choice()
         
         self.__blink=r'\n'
     def init_dat(self):
         '主要是用来每次跑任务的时候，可以从上次中断的地方开始跑任务'
-        
+        pass
         #with open('./dat/visited_user.dat','r') as f:
         #   for line
         #   visited_user=f.read()
@@ -30,7 +32,28 @@ class MyInit():
         # logging.info ('%d matches have been recorded'% len(self.visited_MatchID_disk))
         # logging.info('the current lengh of deque_MatchID is %d'% len(self.deque_MatchID_disk))
         # logging.info('/*-----------------------------------*/')
-    
+    def __read_dat__into__dict(self):
+        try:
+            f=open('./dat/dat_into_dict.dat','wb')
+            out=pk.load(f)
+            f.close()
+        except:
+            print '反序列化数据异常'
+        return out
+    def count_user_dat(self,dat):
+        if len(dat)!=0
+        try:
+            f=open('./dat/dat_into_dict.dat','wb')
+            pk.dump(dat,f)
+            f.close()
+        except:
+            tb=sys.exc_traceback
+            print traceback.print_tb(tb)
+            while tb.next():
+                tb=tb.tb_next
+            for key in tb.tb_frame.f_locals:
+                print 'variable {0} is {1} '.format(key,tb.tb_frame.f_locals[key])
+        
     def write_next_init_file(self,path,content_list):
         '保存下次重新跑程序所需要的数据 '
          
@@ -64,7 +87,7 @@ class MyInit():
             print msg
             logging.DEBUG('./dat/user.dat can not open!')
 
-    def init_choice(self):
+    def __init_choice(self):
         '初始化一个用户id,这次任务就从这个id开始爬取'
         
         if len(self.deque_user_disk)==0:
@@ -78,5 +101,4 @@ def main():
     init=MyInit()
     print init.start_user
 if __name__=='__main__':
-    for x in range(100):
-        main()
+    main()
