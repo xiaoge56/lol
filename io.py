@@ -37,25 +37,18 @@ class MyInit():
         out=dict() 
         try:
             f=open('./dat/user.dat')
-            n=0
-            
             for line in f.readlines():
                 if line is None:
                     return out
                 else:
-                    
                     key=line.split('||')[0]
-                    
                     if out.has_key(key):
                         out[key]+=1
                     else:
                         out[key]=1
-                    
-                    
             f.close()
         except:
             print '反序列化数据异常'
-        print sum(out.values())
         return out
     def count_user_dat(self,dat):
         if len(dat)!=0:
@@ -147,8 +140,9 @@ def main():
     s={'abc':12,'have':20,'daz':22}
     print s
     #init.dump_count()
-    #for key in init.global_users_dat_count:
-    #    print key,init.global_users_dat_count[key]
-    #print 'aa'
+    for key in init.global_users_dat_count:
+       # print key,init.global_users_dat_count[key]
+       pass
+    print 'aa'
 if __name__=='__main__':
     main()
