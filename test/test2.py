@@ -38,7 +38,7 @@ except:
 	while tb.tb_next:
 		tb=tb.tb_next
 	for key in tb.tb_frame.f_locals:
-		print 'variable {0} is {1} '.format(key,tb.tb_frame.f_locals[key])
+		print 'the value of variable {0} is {1} '.format(key,tb.tb_frame.f_locals[key])
 
 	# print exc_type,exc_value
 	# print traceback.tb_lineno(tb)

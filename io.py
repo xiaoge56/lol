@@ -11,6 +11,7 @@ class MyInit():
         self.global_users_dat_count=self.__read_dat__into__dict()
         self.start_user=self.__init_choice()
         
+        self.count_dat=self.load_count()
         self.__blink=r'\n'
     def init_dat(self):
         '主要是用来每次跑任务的时候，可以从上次中断的地方开始跑任务'
@@ -33,27 +34,71 @@ class MyInit():
         # logging.info('the current lengh of deque_MatchID is %d'% len(self.deque_MatchID_disk))
         # logging.info('/*-----------------------------------*/')
     def __read_dat__into__dict(self):
+        out=dict() 
         try:
-            f=open('./dat/dat_into_dict.dat','wb')
-            out=pk.load(f)
+            f=open('./dat/user.dat')
+            n=0
+            
+            for line in f.readlines():
+                if line is None:
+                    return out
+                else:
+                    
+                    key=line.split('||')[0]
+                    
+                    if out.has_key(key):
+                        out[key]+=1
+                    else:
+                        out[key]=1
+                    
+                    
             f.close()
         except:
             print '反序列化数据异常'
+        print sum(out.values())
         return out
     def count_user_dat(self,dat):
-        if len(dat)!=0
-        try:
-            f=open('./dat/dat_into_dict.dat','wb')
-            pk.dump(dat,f)
-            f.close()
-        except:
-            tb=sys.exc_traceback
-            print traceback.print_tb(tb)
-            while tb.next():
-                tb=tb.tb_next
-            for key in tb.tb_frame.f_locals:
-                print 'variable {0} is {1} '.format(key,tb.tb_frame.f_locals[key])
-        
+        if len(dat)!=0:
+            try:
+                f=open('./dat/dat_into_dict.dat','wb')
+                pk.dump(dat,f)
+                f.close()
+            except:
+                tb=sys.exc_traceback
+                print traceback.print_tb(tb)
+                while tb.next():
+                    tb=tb.tb_next
+                for key in tb.tb_frame.f_locals:
+                    print 'variable {0} is {1} '.format(key,tb.tb_frame.f_locals[key])
+    def dump_count(self,dat=None):
+        if dat is None:
+            try:
+                f=open('./dat/dat_into_dict.dat','wb')
+                pk.dump(dat,f)
+                f.close()
+            except:
+                tb=sys.exc_traceback
+                print traceback.print_tb(tb)
+                while tb.next():
+                    tb=tb.tb_next
+                for key in tb.tb_frame.f_locals:
+                    print 'variable {0} is {1} '.format(key,tb.tb_frame.f_locals[key])
+            
+        else:
+            print dat
+            try:
+                f=open('./dat/dat_into_dict.dat','wb')
+                pk.dump(dat,f)
+                f.close()
+            except:
+                tb=sys.exc_traceback
+                print traceback.print_tb(tb)
+                while tb.next():
+                    tb=tb.tb_next
+                for key in tb.tb_frame.f_locals:
+                    print 'variable {0} is {1} '.format(key,tb.tb_frame.f_locals[key])
+    def load_count(self):
+        pass        
     def write_next_init_file(self,path,content_list):
         '保存下次重新跑程序所需要的数据 '
          
@@ -99,6 +144,11 @@ class MyInit():
 
 def main():
     init=MyInit()
-    print init.start_user
+    s={'abc':12,'have':20,'daz':22}
+    print s
+    #init.dump_count()
+    #for key in init.global_users_dat_count:
+    #    print key,init.global_users_dat_count[key]
+    #print 'aa'
 if __name__=='__main__':
     main()
