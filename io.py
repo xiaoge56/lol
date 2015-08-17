@@ -140,9 +140,10 @@ def main():
     s={'abc':12,'have':20,'daz':22}
     print s
     #init.dump_count()
-    for key in init.global_users_dat_count:
-       # print key,init.global_users_dat_count[key]
-       pass
+    # for key in init.global_users_dat_count:
+    #    print key,type(init.global_users_dat_count[key])
+    #    break
+    #    pass
     print 'aa'
 if __name__=='__main__':
     main()
