@@ -81,7 +81,7 @@ def breadth_frist_search(myobject):
             write_next_init_file('./dat/visited_user.dat',visited_user)
             logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
         n+=1
-        # if n>10:
-            # break
+        if n>1:
+            break
         
     return True

@@ -10,6 +10,8 @@ def find_mathID_detail(match_id,user_id,my_object):
     html=urllib2.urlopen(re).read()
     soup_html=BeautifulSoup(html,"html.parser")
     detail_dat=spider.battle_detail_parse(soup_html)
+    
+    
     if len(detail_dat)!=0:
          for item in detail_dat:
              find_users.append(item[0])
@@ -53,13 +55,15 @@ def find_match_id(soup_html):
 
 def battle_detail_parse(soup_html):
     '返回一个列表，包含每场战斗中玩家的详细数据'
-    
+     
     div_layer=soup_html('div','layer')
     retDataList=[]
     if len(div_layer)>0:
         
         for every_player in div_layer:
-            retDataList.append(deal_with_bs_data(every_player))
+            userdat=deal_with_bs_data(every_player)
+            print userdat,' |delete'
+            retDataList.append(userdat)
         return retDataList
     else:
         print '详细战斗数据为空'
