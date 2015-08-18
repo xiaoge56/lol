@@ -1,5 +1,5 @@
 #coding:utf-8
-def find_mathID_detail(match_id,user_id):
+def find_mathID_detail(match_id,user_id,my_object):
     '根据提供的match_id，返回的数据为两个对象，一个是用户列表，一个是这次战斗中的用户战斗数据'
     
     serverName=r'网通三'
@@ -13,6 +13,10 @@ def find_mathID_detail(match_id,user_id):
     if len(detail_dat)!=0:
          for item in detail_dat:
              find_users.append(item[0])
+             if my_object.global_users_dat_count.has_key(item[0]):
+                 my_object.global_users_dat_count[item[0]]+=1
+             else:
+                 my_object.global_users_dat_count[item[0]]=1
     else:
         return find_users,detail_dat
     return find_users,detail_dat
