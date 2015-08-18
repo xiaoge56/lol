@@ -13,8 +13,12 @@ def find_mathID_detail(match_id,user_id,my_object):
     if len(detail_dat)!=0:
          for item in detail_dat:
              find_users.append(item[0])
+             #更新数据时候，同时更新统计数据
              if my_object.global_users_dat_count.has_key(item[0]):
-                 my_object.global_users_dat_count[item[0]]+=1
+                 if my_object.global_users_dat_count[item[0]]>20:
+                     break
+                 else:
+                    my_object.global_users_dat_count[item[0]]+=1
              else:
                  my_object.global_users_dat_count[item[0]]=1
     else:

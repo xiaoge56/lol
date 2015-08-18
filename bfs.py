@@ -58,7 +58,7 @@ def breadth_frist_search(myobject):
         for match in deque_MatchID:#处理当前用户的所有marchid数据
             if match not in visited_MatchID:
                 
-                find_users,detail_dat=find_mathID_detail(match,current_user_node)
+                find_users,detail_dat=find_mathID_detail(match,current_user_node,myobject)#在函数返回之前，已经更新了统计数据
                 if len(detail_dat)!=0:
                     visited_MatchID.append(match)
                     save_detail_on_disk(detail_dat)
