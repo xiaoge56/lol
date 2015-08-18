@@ -138,11 +138,14 @@ class MyInit():
 def main():
     init=MyInit()
     s={'abc':12,'have':20,'daz':22}
-    print s
+    n=0
     #init.dump_count()
-    for key in init.global_users_dat_count:
-       # print key,init.global_users_dat_count[key]
-       pass
-    print 'aa'
+    print sum(init.global_users_dat_count.values())
+    # for key in init.global_users_dat_count:
+    #    print key,init.global_users_dat_count[key]
+    #    n+=1
+    #    if n==100:
+    #        break
+    # print 'aa'
 if __name__=='__main__':
     main()
