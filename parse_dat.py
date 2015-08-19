@@ -1,15 +1,21 @@
 #coding:utf-8
+import urllib
+import urllib2
+import read_lol_dat
 def find_mathID_detail(match_id,user_id,my_object):
     '根据提供的match_id，返回的数据为两个对象，一个是用户列表，一个是这次战斗中的用户战斗数据'
     
     serverName=r'网通三'
     playerName=user_id
-    battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?match_id=%s&serverName=%s&playerName=%s&favorate=0'%(match_id,urllib.quote(serverName),urllib.quote(playerName))
+    battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId=%s&serverName=%s&playerName=%s&favorate=0'%(match_id,urllib.quote(serverName),urllib.quote(playerName))
+    
     find_users=[]
-    re=spider.http_header(battle_url)
+    re=read_lol_dat.http_header(battle_url)
     html=urllib2.urlopen(re).read()
-    soup_html=BeautifulSoup(html,"html.parser")
-    detail_dat=spider.battle_detail_parse(soup_html)
+    
+    soup_html=read_lol_dat.BeautifulSoup(html,"html.parser")
+    
+    detail_dat=battle_detail_parse(soup_html)
     
     
     if len(detail_dat)!=0:
@@ -55,14 +61,14 @@ def find_match_id(soup_html):
 
 def battle_detail_parse(soup_html):
     '返回一个列表，包含每场战斗中玩家的详细数据'
-     
+    
     div_layer=soup_html('div','layer')
     retDataList=[]
     if len(div_layer)>0:
         
         for every_player in div_layer:
             userdat=deal_with_bs_data(every_player)
-            print userdat,' |delete'
+            
             retDataList.append(userdat)
         return retDataList
     else:
@@ -104,3 +110,43 @@ def get_page_limit(soup_html):
     '''
     page_num=soup_html('span','page-num')
     return page_num[0].get_text(strip=True,separator=u'|')[-2:]
+
+def find_user_matchIDs(username):
+    'search the target user latest 3page martch id'
+    matchid=[]
+    serverName=r'网通三'
+    playerName=username
+    
+
+    matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s'%(serverName,urllib.quote(playerName))
+    print matchId_by_name_url
+    # matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94'
+    re=read_lol_dat.http_header(matchId_by_name_url)
+    html=urllib2.urlopen(re).read()
+    
+    soup_html=read_lol_dat.BeautifulSoup(html,"html.parser")
+    page_nnnumber=int(get_page_limit(soup_html))
+    
+    t=find_match_id(soup_html)
+
+    matchid.extend(t)#page_nnnumber默认从0开始，记录数据，避免后续重复查询
+    # print '第%s页有%s条数据,当前一共%s数据'%(1,len(t),len(matchid))
+    
+    if page_nnnumber<=2:
+        logging.DEBUG('%s 用户数据过少，不予统计'%(username))
+        return []
+    
+    else:
+        for n_page in range(1,4):
+            matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s&page=%s'%(serverName,playerName,str(n_page+1))
+            re=read_lol_dat.http_header(matchId_by_name_url)
+            html=urllib2.urlopen(re).read()
+            soup_html=read_lol_dat.BeautifulSoup(html,"html.parser")
+            temp=find_match_id(soup_html)
+            
+            matchid.extend(temp)
+            # print '第%s页有%s条数据,当前一共%s数据'%(n_page+1,len(temp),len(matchid))
+            if len(matchid)>15:
+                break
+    
+    return matchid

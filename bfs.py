@@ -1,12 +1,10 @@
 #coding:utf-8
-import log
+import logging
 from collections import deque
+import urllib2
+import parse_dat
 def breadth_frist_search(myobject):
     'search the graph starting by one node using BFS'
-    global visited_user_disk
-    # global deque_MatchID_disk
-    global visited_MatchID_disk
-    global deque_user_disk
     
     start_user_point=myobject.start_user
     
@@ -20,6 +18,10 @@ def breadth_frist_search(myobject):
     
     start_user_point=myobject.start_user
     deque_user.append(start_user_point)
+    
+    print 'visited_MatchID:',visited_MatchID
+    print 'visited_user:',visited_user
+    print 'deque_user:',deque_user
     
     logging.info('Starting.....')
     n=0
@@ -35,14 +37,14 @@ def breadth_frist_search(myobject):
             break
         
         try:
-            get_deque_MatchID=find_user_matchIDs(current_user_node)#找到一个user的所有marchIds
+            get_deque_MatchID=parse_dat.find_user_matchIDs(current_user_node)#找到一个user的所有marchIds
             #返回的是一个包含字典的列表，字典中key是matchId，value是本次Id的模式
             if len(get_deque_MatchID)<1:
                 '如果返回的数据为空,也就是数据过少'
                 logging.info('the data of current user (%s) is small ,so drop it and continue '%(current_user_node))
                 continue
         except urllib2.HTTPError,e:
-            write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
+            myobject.write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
             logging.DEBUG('The server couldn\'t fulfill the request...deque_MatchID saved!')
             print 'The server couldn\'t fulfill the request.'  
             print 'Error code: ', e.code
@@ -51,6 +53,7 @@ def breadth_frist_search(myobject):
             print 'We failed to reach a server.'  
             print 'Reason: ', e.reason
         #返回当前用户的matchID
+        
         deque_MatchID.extend(get_deque_MatchID)
         # print '%s 有%s条记录'%(current_user_node,len(get_deque_MatchID))
         # count=0
@@ -58,10 +61,11 @@ def breadth_frist_search(myobject):
         for match in deque_MatchID:#处理当前用户的所有marchid数据
             if match not in visited_MatchID:
                 
-                find_users,detail_dat=find_mathID_detail(match,current_user_node,myobject)#在函数返回之前，已经更新了统计数据
+                find_users,detail_dat=parse_dat.find_mathID_detail(match,current_user_node,myobject)#在函数返回之前，已经更新了统计数据
+                print find_users,detail_dat
                 if len(detail_dat)!=0:
                     visited_MatchID.append(match)
-                    save_detail_on_disk(detail_dat)
+                    myobject.save_detail_on_disk(detail_dat)
                 else:
                     break
                 for user in find_users:
@@ -75,10 +79,10 @@ def breadth_frist_search(myobject):
                 # print 'deque_user:',deque_user
         # print '%s 有%s条记录'%(current_user_node,len(get_deque_MatchID)+count)
         if n%10==0:
-            write_next_init_file('./dat/deque_user.dat',deque_user)
+            myobject.write_next_init_file('./dat/deque_user.dat',deque_user)
             #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
-            write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
-            write_next_init_file('./dat/visited_user.dat',visited_user)
+            myobject.write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
+            myobject.write_next_init_file('./dat/visited_user.dat',visited_user)
             logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
         n+=1
         if n>1:

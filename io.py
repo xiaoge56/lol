@@ -12,7 +12,7 @@ class MyInit():
         self.start_user=self.__init_choice()
         
         self.count_dat=self.load_count()
-        self.__blink=r'\n'
+        self.__blink='\n'
     def init_dat(self):
         '主要是用来每次跑任务的时候，可以从上次中断的地方开始跑任务'
         pass
@@ -120,7 +120,7 @@ class MyInit():
             with open('./dat/user.dat','a') as f:
                 for line in detail_dat:
                     d='||'.join(line)
-                    f.write(d+self.blink)
+                    f.write(d+self.__blink)
         except IOError,msg:
             print msg
             logging.DEBUG('./dat/user.dat can not open!')

@@ -1,6 +1,7 @@
-#code:utf-8
-
-
+#coding:utf-8
+import urllib2
+from bs4 import BeautifulSoup
+import parse_dat
 def http_header(url):
     '构造http请求协议，伪造浏览器操作'
     send_headers = {  'Host':'lolbox.duowan.com',
@@ -18,11 +19,11 @@ def find_user_matchIDs(username):
     
 
     matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s'%(serverName,urllib.quote(playerName))
-    re=spider.http_header(matchId_by_name_url)
+    re=http_header(matchId_by_name_url)
     html=urllib2.urlopen(re).read()
-    soup_html=spider.BeautifulSoup(html,"html.parser")
-    page_nnnumber=int(spider.get_page_limit(soup_html))
-    t=spider.find_match_id(soup_html)
+    soup_html=BeautifulSoup(html,"html.parser")
+    page_nnnumber=int(parse_dat.get_page_limit(soup_html))
+    t=parse_dat.find_match_id(soup_html)
     matchid.extend(t)#page_nnnumber默认从0开始，记录数据，避免后续重复查询
     # print '第%s页有%s条数据,当前一共%s数据'%(1,len(t),len(matchid))
     
@@ -33,10 +34,10 @@ def find_user_matchIDs(username):
     else:
         for n_page in range(1,4):
             matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s&page=%s'%(serverName,playerName,str(n_page+1))
-            re=spider.http_header(matchId_by_name_url)
+            re=http_header(matchId_by_name_url)
             html=urllib2.urlopen(re).read()
-            soup_html=spider.BeautifulSoup(html,"html.parser")
-            temp=spider.find_match_id(soup_html)
+            soup_html=BeautifulSoup(html,"html.parser")
+            temp=parse_dat.find_match_id(soup_html)
             
             matchid.extend(temp)
             # print '第%s页有%s条数据,当前一共%s数据'%(n_page+1,len(temp),len(matchid))
