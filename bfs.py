@@ -19,9 +19,9 @@ def breadth_frist_search(myobject):
     start_user_point=myobject.start_user
     deque_user.append(start_user_point)
     
-    print 'visited_MatchID:',visited_MatchID
-    print 'visited_user:',visited_user
-    print 'deque_user:',deque_user
+    # print 'visited_MatchID:',visited_MatchID
+    # print 'visited_user:',visited_user
+    # print 'deque_user:',deque_user
     
     logging.info('Starting.....')
     n=0
@@ -62,7 +62,7 @@ def breadth_frist_search(myobject):
             if match not in visited_MatchID:
                 
                 find_users,detail_dat=parse_dat.find_mathID_detail(match,current_user_node,myobject)#在函数返回之前，已经更新了统计数据
-                print find_users,detail_dat
+                
                 if len(detail_dat)!=0:
                     visited_MatchID.append(match)
                     myobject.save_detail_on_disk(detail_dat)

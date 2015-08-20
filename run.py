@@ -14,5 +14,5 @@ def main():
 	
 if __name__=='__main__':
         main()
-http://www.55bl.com/thread-646-1-1.html
-http://bayes.wustl.edu/etj/prob/book.pdf
+# http://www.55bl.com/thread-646-1-1.html
+# http://bayes.wustl.edu/etj/prob/book.pdf

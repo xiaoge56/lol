@@ -7,7 +7,10 @@ def find_mathID_detail(match_id,user_id,my_object):
     
     serverName=r'网通三'
     playerName=user_id
-    battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId=%s&serverName=%s&playerName=%s&favorate=0'%(match_id,urllib.quote(serverName),urllib.quote(playerName))
+    
+    test='{0},{1},{2}'.format(match_id,urllib.quote(str(serverName)),urllib.quote(str(playerName)))
+    print test
+    battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId={0}&serverName={1}&playerName={2}&favorate=0'.format(match_id,urllib.quote(str(serverName)),urllib.quote(str(playerName)))
     
     find_users=[]
     re=read_lol_dat.http_header(battle_url)
@@ -118,8 +121,8 @@ def find_user_matchIDs(username):
     playerName=username
     
 
-    matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%s&playerName=%s'%(serverName,urllib.quote(playerName))
-    print matchId_by_name_url
+    matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName={0}&playerName={1}'.format(serverName,urllib.quote(str(playerName)))
+    print matchId_by_name_url,'|||'
     # matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94'
     re=read_lol_dat.http_header(matchId_by_name_url)
     html=urllib2.urlopen(re).read()
