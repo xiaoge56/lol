@@ -8,8 +8,8 @@ def find_mathID_detail(match_id,user_id,my_object):
     serverName=r'网通三'
     playerName=user_id
     
-    test='{0},{1},{2}'.format(match_id,urllib.quote(str(serverName)),urllib.quote(str(playerName)))
-    print test
+    # test='{0},{1},{2}'.format(match_id,urllib.quote(str(serverName)),urllib.quote(str(playerName)))
+    # print test
     battle_url=r'http://lolbox.duowan.com/matchList/ajaxMatchDetail2.php?matchId={0}&serverName={1}&playerName={2}&favorate=0'.format(match_id,urllib.quote(str(serverName)),urllib.quote(str(playerName)))
     
     find_users=[]
@@ -18,7 +18,7 @@ def find_mathID_detail(match_id,user_id,my_object):
     
     soup_html=read_lol_dat.BeautifulSoup(html,"html.parser")
     
-    detail_dat=battle_detail_parse(soup_html)
+    detail_dat=battle_detail_parse(soup_html,my_object)
     
     
     if len(detail_dat)!=0:
@@ -27,11 +27,11 @@ def find_mathID_detail(match_id,user_id,my_object):
              #更新数据时候，同时更新统计数据
              if my_object.global_users_dat_count.has_key(item[0]):
                  if my_object.global_users_dat_count[item[0]]>20:
-                     break
+                      break
                  else:
-                    my_object.global_users_dat_count[item[0]]+=1
+                     my_object.global_users_dat_count[item[0]]+=1
              else:
-                 my_object.global_users_dat_count[item[0]]=1
+                  my_object.global_users_dat_count[item[0]]=1             
     else:
         return find_users,detail_dat
     return find_users,detail_dat
@@ -62,7 +62,7 @@ def find_match_id(soup_html):
     # print  return_set       
     return return_set
 
-def battle_detail_parse(soup_html):
+def battle_detail_parse(soup_html,my_object):
     '返回一个列表，包含每场战斗中玩家的详细数据'
     
     div_layer=soup_html('div','layer')
@@ -71,7 +71,15 @@ def battle_detail_parse(soup_html):
         
         for every_player in div_layer:
             userdat=deal_with_bs_data(every_player)
-            
+            #更新統計結果
+            if my_object.global_users_dat_count.has_key(userdat[0]):
+                if my_object.global_users_dat_count[userdat[0]]>20:
+                     break
+                else:
+                    my_object.global_users_dat_count[userdat[0]]+=1
+            else:
+                 my_object.global_users_dat_count[userdat[0]]=1
+            print '當前用戶{0}的統計：{1}'.format(userdat[0],my_object.global_users_dat_count[userdat[0]])
             retDataList.append(userdat)
         return retDataList
     else:
@@ -122,7 +130,7 @@ def find_user_matchIDs(username):
     
 
     matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName={0}&playerName={1}'.format(serverName,urllib.quote(str(playerName)))
-    print matchId_by_name_url,'|||'
+    
     # matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94'
     re=read_lol_dat.http_header(matchId_by_name_url)
     html=urllib2.urlopen(re).read()

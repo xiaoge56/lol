@@ -9,7 +9,9 @@ class MyInit():
         self.deque_user_disk=self.init_read_file('./dat/deque_user.dat')
         self.deque_MatchID_disk=self.init_read_file('./dat/deque_MatchID.dat')
         self.global_users_dat_count=self.__read_dat__into__dict()
+        
         self.start_user=self.__init_choice()
+        self.current_user=None
         
         self.count_dat=self.load_count()
         self.__blink='\n'
@@ -130,17 +132,20 @@ class MyInit():
         
         if len(self.deque_user_disk)==0:
             user_point=r'三纷绣气'
-            return user_point
+            self.current_user=user_point
+            
         else:
-            user_point=self.deque_user_disk.popleft()
-            return user_point
+            self.current_user=self.deque_user_disk.popleft()
+            # return user_point
+            # return u''
 
 def main():
     init=MyInit()
     s={'abc':12,'have':20,'daz':22}
     n=0
     #init.dump_count()
-    print sum(init.global_users_dat_count.values())
+    print init.start_user
+    print init.start_user
     # for key in init.global_users_dat_count:
     #    print key,init.global_users_dat_count[key]
     #    n+=1
