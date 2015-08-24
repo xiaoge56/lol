@@ -28,7 +28,7 @@ def breadth_frist_search(myobject):
     while len(deque_user)!=0:
         
         myobject.current_user=deque_user.popleft()
-        print 'myobject.current_user:{name},{times}'.format(name=myobject.current_user,times=n)
+        # print 'myobject.current_user:{name},{times}'.format(name=myobject.current_user,times=n)
         if myobject.current_user not in visited_user:
             visited_user.append(myobject.current_user)
             
