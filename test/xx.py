@@ -13,14 +13,7 @@ class ThreadUrl(threading.Thread):
 		self.queue = queue
 
 	def run(self):
-		
-      	#grabs host from queue
-		host = self.queue.get()
-		url = urllib2.urlopen(host)
-		print url.read(1024)
-  
-      #signals to queue job is done
-      	self.queue.task_done()
+		a=self.getname()
 
 
 def main():

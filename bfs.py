@@ -81,14 +81,12 @@ def breadth_frist_search(myobject):
         # print '%s 有%s条记录'%(myobject.current_user,len(get_deque_MatchID)+count)
         
         
-        if n%10==0:
-            myobject.write_next_init_file('./dat/deque_user.dat',deque_user)
-            #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
-            myobject.write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
-            myobject.write_next_init_file('./dat/visited_user.dat',visited_user)
-            logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
-        n+=1
-        if n>11:
-            break
+        
+        myobject.write_next_init_file('./dat/deque_user.dat',deque_user)
+        #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
+        myobject.write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)
+        myobject.write_next_init_file('./dat/visited_user.dat',visited_user)
+        logging.info('new deque_user,deque_MatchID,visited_user,visited_MatchID have been recorded')
+
         
     return True
