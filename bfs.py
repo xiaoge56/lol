@@ -10,7 +10,7 @@ def breadth_frist_search(myobject):
     
     
      
-    
+    print myobject.current_user
     visited_MatchID=myobject.visited_MatchID_disk
     deque_user=myobject.deque_user_disk#上次未完成工作进度,默认从头开始
     visited_user=myobject.visited_user_disk
@@ -81,7 +81,7 @@ def breadth_frist_search(myobject):
         # print '%s 有%s条记录'%(myobject.current_user,len(get_deque_MatchID)+count)
         
         
-        
+        break
         myobject.write_next_init_file('./dat/deque_user.dat',deque_user)
         #write_next_init_file('./dat/deque_MatchID.dat',deque_MatchID)
         myobject.write_next_init_file('./dat/visited_MatchID.dat',visited_MatchID)

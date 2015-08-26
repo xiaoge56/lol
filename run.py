@@ -1,4 +1,5 @@
 #coding:utf-8
+from multiprocessing import Process,Queue,Lock
 import io
 from bfs import breadth_frist_search
 import sys
@@ -7,8 +8,10 @@ sys.setdefaultencoding('utf8')
 def main():
 	
 	init=io.MyInit()
-	breadth_frist_search(init)
-	print init.count_dat
+	p1=Process(target=breadth_frist_search, args=(init,))
+	p1.start()
+	p1.join()
+	# print init.count_dat
 	
 if __name__=='__main__':
         main()

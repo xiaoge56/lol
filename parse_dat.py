@@ -120,6 +120,7 @@ def get_page_limit(soup_html):
     
     '''
     page_num=soup_html('span','page-num')
+    
     return page_num[0].get_text(strip=True,separator=u'|')[-2:]
 
 def find_user_matchIDs(username):
@@ -134,8 +135,9 @@ def find_user_matchIDs(username):
     # matchId_by_name_url=r'http://lolbox.duowan.com/matchList.php?serverName=%E7%BD%91%E9%80%9A%E4%B8%89&playerName=%E4%B8%89%E7%BA%B7%E7%BB%A3%E6%B0%94'
     re=read_lol_dat.http_header(matchId_by_name_url)
     html=urllib2.urlopen(re).read()
-    
+
     soup_html=read_lol_dat.BeautifulSoup(html,"html.parser")
+
     page_nnnumber=int(get_page_limit(soup_html))
     
     t=find_match_id(soup_html)

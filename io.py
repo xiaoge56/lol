@@ -10,7 +10,9 @@ class MyInit():
         self.deque_MatchID_disk=self.init_read_file('./dat/deque_MatchID.dat')
         self.global_users_dat_count=self.__read_dat__into__dict()
         
+        
         self.start_user=self.__init_choice()
+        
         self.current_user=None
         
         self.count_dat=self.load_count()
@@ -131,11 +133,13 @@ class MyInit():
         '初始化一个用户id,这次任务就从这个id开始爬取'
         
         if len(self.deque_user_disk)==0:
-            user_point=r'三纷绣气'
-            self.current_user=user_point
+            
+            user_point=u'三纷绣气'
+            return user_point
             
         else:
-            self.current_user=self.deque_user_disk.popleft()
+            
+            return self.deque_user_disk.popleft()
             # return user_point
             # return u''
 
